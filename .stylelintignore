@@ -1,0 +1,11 @@
+*.tsx
+*.jsx
+*.ts
+*.js
+*.md
+*.svg
+*.woff2
+*.png
+*.ico
+*.jpg
+/node_modules
