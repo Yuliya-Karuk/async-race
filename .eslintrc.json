@@ -31,7 +31,7 @@
   ],
   "rules": {
     "no-debugger": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-console": ["warning", { "allow": ["warn", "error"] }],
     "class-methods-use-this": "off",
     "import/extensions": "off",
     "prettier/prettier": "error",
