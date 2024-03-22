@@ -1,3 +1,4 @@
+import { Routes } from '../router/router.types';
 import { DomElementAttribute, DomElementProperties } from '../types/interfaces';
 
 export function isNotNullable<T>(value: T): NonNullable<T> {
@@ -9,20 +10,32 @@ export function isNotNullable<T>(value: T): NonNullable<T> {
 
 export function createElementWithProperties<K extends keyof HTMLElementTagNameMap>(
   tagName: K,
-  elClassName: string,
+  classNames: string[],
   attr?: DomElementAttribute,
-  props?: DomElementProperties[]
+  props?: DomElementProperties[],
+  children?: HTMLElementTagNameMap[keyof HTMLElementTagNameMap][]
 ): HTMLElementTagNameMap[K] {
   const element = document.createElement(tagName);
-  element.className = elClassName;
+
+  if (classNames.length > 0) {
+    element.classList.add(...classNames);
+  }
+
   if (attr) {
     for (let i = 0; i < Object.keys(attr).length; i += 1) {
       const key = Object.keys(attr)[i];
       element.setAttribute(key, attr[key]);
     }
   }
+
   if (props) {
     Object.assign(element, ...props);
+  }
+
+  if (children) {
+    children.forEach(child => {
+      element.append(child);
+    });
   }
   return element;
 }
@@ -53,4 +66,11 @@ export function checkTouch(value: Touch | null): HTMLElement {
     return value;
   }
   throw new Error(`Not expected value`);
+}
+
+export function CheckRoute(route: string): Routes {
+  if (route === Routes.Garage || route === Routes.Winners) {
+    return route as Routes.Garage;
+  }
+  throw new Error(`404 Not Found`);
 }

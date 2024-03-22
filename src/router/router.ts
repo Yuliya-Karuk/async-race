@@ -1,7 +1,10 @@
 import { Callback } from '../types/types';
+import { CheckRoute } from '../utils/utils';
+import { Routes } from './router.types';
 
 export class Router {
   private setContent: Callback<string>;
+  public currentPage: Routes;
 
   constructor(setMainContent: Callback<string>) {
     this.setContent = setMainContent;
@@ -11,8 +14,8 @@ export class Router {
   }
 
   public handleLocation(): void {
-    const currentPage = window.location.pathname;
-    this.setContent(currentPage);
+    this.currentPage = CheckRoute(window.location.pathname);
+    this.setContent(this.currentPage);
   }
 
   public navigateTo(location: string): void {
