@@ -1,12 +1,13 @@
 import { Garage } from '../../pages/garage/garage';
 import { Winners } from '../../pages/winners/winners';
-import { createElementWithProperties } from '../../utils/utils';
+import { BaseComponent } from '../baseComponent';
+import styles from './main.module.scss';
 
-export class Main {
+export class Main extends BaseComponent {
   private element: HTMLElement;
 
   constructor() {
-    this.element = createElementWithProperties('main', 'main');
+    super('main', [styles.main]);
   }
 
   public setContent(component: Garage | Winners): void {
@@ -16,9 +17,5 @@ export class Main {
     } else {
       this.element.replaceChildren(element);
     }
-  }
-
-  public getComponent(): HTMLElement {
-    return this.element;
   }
 }
