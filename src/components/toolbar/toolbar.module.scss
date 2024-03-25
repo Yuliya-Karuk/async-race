@@ -1,0 +1,64 @@
+.toolbar {
+  width: 100%;
+  @include flex(space-between, center);
+  row-gap: 20px;
+
+  @include media-laptop {
+    flex-wrap: wrap;
+  }
+}
+
+.controls-container {
+  width: 30%;
+  @include flex(space-between, center);
+  flex-wrap: wrap;
+  row-gap: 10px;
+
+  @include media-laptop {
+    width: 45%;
+  }
+}
+
+.race-container {
+  width: 35%;
+  @include flex(flex-start, center);
+  gap: 3%;
+
+  @include media-laptop {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.input-name {
+  width: 70%;
+  height: 40px;
+
+  @extend %transition;
+
+  @include font(1.6rem, 700, 1.25);
+
+  @include media-hover {
+    &:hover {
+      box-shadow: 0 0 2px 1px rgb(0 0 0 / 40%);
+    }
+  }
+
+  padding: 10px;
+  color: var(--color-font-dark);
+  background: rgb(255 255 255 / 70%);
+  border: 1px solid var(--color-background);
+  border-radius: 8px;
+
+  &:focus {
+    background: rgb(255 255 255 / 50%);
+    border: 1px solid var(--color-primary-bright);
+    box-shadow: none;
+  }
+}
+
+.input-color {
+  width: 25%;
+  height: 40px;
+  border: 1px solid var(--color-background);
+}

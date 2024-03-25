@@ -1,4 +1,4 @@
-import { Car, CarsPageParams, QueryParams } from "../../types/types";
+import { CarsPageParams, QueryParams, TCar } from "../../types/types";
 import { buildURL } from "../../utils/buildUrl";
 import { BaseUrl } from "../../utils/constants";
 
@@ -10,7 +10,7 @@ export class CarsDatabase {
 
   }
 
-  public async getCars({ pageNum, carsPerPage }: CarsPageParams): Promise<Car[]> {
+  public async getCars({ pageNum, carsPerPage }: CarsPageParams): Promise<TCar[]> {
     let queryParams;
     if (pageNum && carsPerPage) {
       queryParams = {
@@ -18,7 +18,7 @@ export class CarsDatabase {
         _limit: carsPerPage.toString(),
       };
     }
-    const cars = await this.getData<Car>(this.garageEndpoint, queryParams);
+    const cars = await this.getData<TCar>(this.garageEndpoint, queryParams);
     return cars;
   }
 

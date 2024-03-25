@@ -6,7 +6,7 @@ import { CarsDatabase } from '../../model/carsDatabase';
 
 export class MainController {
   public main: Main;
-  private view: Garage | Winners;
+  private page: Garage | Winners;
   private carsDB: CarsDatabase;
 
   constructor() {
@@ -18,22 +18,21 @@ export class MainController {
     switch (location) {
       case Routes.Winners:
         const { Winners } = await import('../../../pages/winners/winners');
-        this.view = new Winners()
+        this.page = new Winners()
         // this.controller.main.setContent(new Winners());
         break;
       default:
         const { Garage } = await import('../../../pages/garage/garage');
-        this.view = new Garage()
+        this.page = new Garage()
         this.loadPage(1)
-        // this.controller.main.setContent(new Garage());
+        this.main.setContent(this.page.view.getNode());
     }
   }
 
   private async loadPage(pageNumber: number = 1): Promise<void> {
-    if (this.view instanceof Garage) {
+    if (this.page instanceof Garage) {
       const carsPage = await this.carsDB.getCars({ pageNum: pageNumber, carsPerPage: 5 });
-      console.log(carsPage);
-      // this.view.drawCars(carsPage as CarFullData[]);
+      this.page.renderPage(carsPage);
     }
   }
 

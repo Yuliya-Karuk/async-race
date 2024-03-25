@@ -1,7 +1,7 @@
 .btn {
   @extend %transition;
 
-  @include font(2rem, 700, normal);
+  @include font(2rem, 700, 1.25);
 
   @include media-hover {
     &:not([disabled]):hover {
@@ -25,6 +25,12 @@
 
   &_hidden {
     display: none;
+  }
+
+  &_centered {
+    margin: 0 auto;
+    @include flex(center, center);
+    flex-wrap: wrap;
   }
 }
 

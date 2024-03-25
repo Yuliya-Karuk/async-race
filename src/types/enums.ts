@@ -4,6 +4,6 @@ export enum KeyQueryParam {
 }
 
 export enum RaceViews {
-  garage = 'gatege',
-  limit = '_limit',
+  garage = 'garage',
+  winners = 'winners',
 }

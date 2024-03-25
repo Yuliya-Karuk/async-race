@@ -6,7 +6,7 @@ export type QueryParams = {
   [K in keyof typeof KeyQueryParam]: string;
 };
 
-export type Car = {
+export type TCar = {
   id: number;
   name: string;
   color: string;
