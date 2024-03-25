@@ -1,5 +1,6 @@
 import { createElementWithProperties } from '../../utils/utils';
 import { BaseComponent } from '../baseComponent';
+import { SVGComponent } from '../svgComponent/svgComponent';
 import styles from './car.module.scss';
 
 export class Car extends BaseComponent{
@@ -13,6 +14,7 @@ export class Car extends BaseComponent{
   public startButton: HTMLButtonElement;
   public stopButton: HTMLButtonElement;
   public carImage: HTMLDivElement;
+  public carSvg: SVGComponent;
 
   constructor(name: string, color: string) {
     super('div', [styles.car]);
@@ -23,6 +25,7 @@ export class Car extends BaseComponent{
   }
 
   private createContent(): void {
+    console.log(this.color);
     this.createRaceControls();
     this.createCarTrack();
     this.createCarControls();
@@ -55,10 +58,11 @@ export class Car extends BaseComponent{
   }
 
   private createCarTrack(): void {
-    // this.carSvg = createElementWithProperties('div', [styles.carImage]);
-    this.carImage = createElementWithProperties('div', [styles.carImage]);
-    const carTrack = createElementWithProperties('div', [styles.carTrack]);
-    this.deleteButton = createElementWithProperties('button', ['btn'], undefined, undefined,
+    this.carSvg = new SVGComponent();
+    this.carImage = createElementWithProperties('div', [styles.carImage], undefined, undefined, [
+      this.carSvg.getNode(),
+    ]);
+    const carTrack = createElementWithProperties('div', [styles.carTrack], undefined, undefined,
       [this.carImage]);
     this.node.append(carTrack);
   }

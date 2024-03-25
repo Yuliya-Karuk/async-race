@@ -2,7 +2,7 @@ import { BaseComponent } from '../baseComponent';
 import styles from './main.module.scss';
 
 export class Main extends BaseComponent {
-  private element: HTMLElement;
+  // private element: HTMLElement;
 
   constructor() {
     super('main', [styles.main]);

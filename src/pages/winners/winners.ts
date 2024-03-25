@@ -4,7 +4,7 @@ export class Winners {
   public element: HTMLDivElement;
 
   constructor() {
-    this.element = createElementWithProperties('div', '', undefined, [{ innerText: `Winners` }]);
+    this.element = createElementWithProperties('div', ['djsck'], undefined, [{ innerText: `Winners` }]);
   }
 
   public getComponent(): HTMLDivElement {

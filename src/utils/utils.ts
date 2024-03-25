@@ -13,7 +13,7 @@ export function createElementWithProperties<K extends keyof HTMLElementTagNameMa
   classNames: string[],
   attr?: DomElementAttribute,
   props?: DomElementProperties[],
-  children?: HTMLElementTagNameMap[keyof HTMLElementTagNameMap][]
+  children?: (HTMLElementTagNameMap[keyof HTMLElementTagNameMap] | SVGElement)[],
 ): HTMLElementTagNameMap[K] {
   const element = document.createElement(tagName);
 
