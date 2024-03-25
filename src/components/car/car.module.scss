@@ -23,6 +23,12 @@
 
 .car-track {
   width: 100%;
-  height: 70px;
+  height: 50px;
+  padding: 0 10px;
   background: #969696;
+}
+
+.car-image {
+  height: 100%;
+  @include flex(flex-start, center);
 }

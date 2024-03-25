@@ -51,7 +51,7 @@ interface ConstructorOf<T> {
   new (...args: readonly never[]): T;
 }
 
-export function getDOMElement<T extends Node>(
+export function checkDOMElement<T extends Node>(
   elemType: ConstructorOf<T>,
   element: Element | Document | DocumentFragment
 ): T {
@@ -73,4 +73,8 @@ export function CheckRoute(route: string): Routes {
     return route as Routes.Garage;
   }
   throw new Error(`404 Not Found`);
+}
+
+export function getRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }

@@ -25,7 +25,6 @@ export class Car extends BaseComponent{
   }
 
   private createContent(): void {
-    console.log(this.color);
     this.createRaceControls();
     this.createCarTrack();
     this.createCarControls();
@@ -58,7 +57,7 @@ export class Car extends BaseComponent{
   }
 
   private createCarTrack(): void {
-    this.carSvg = new SVGComponent();
+    this.carSvg = new SVGComponent(this.color);
     this.carImage = createElementWithProperties('div', [styles.carImage], undefined, undefined, [
       this.carSvg.getNode(),
     ]);
