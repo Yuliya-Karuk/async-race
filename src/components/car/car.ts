@@ -42,6 +42,7 @@ export class Car extends BaseComponent{
       this.startButton,
       this.stopButton,
     ]);
+    this.setRaceButtons(false);
     this.node.append(raceControlsContainer);
   }
 
@@ -72,4 +73,15 @@ export class Car extends BaseComponent{
   public moveCarImage(newValue: number): void {
     this.carImage.style.transform = `translateX(${newValue}px)`;
   }
+
+  public setRaceButtons(isMoved: boolean): void {
+    if(isMoved) {
+      this.startButton.setAttribute('disabled', 'disabled');
+      this.stopButton.removeAttribute('disabled');
+    } else {
+      this.stopButton.setAttribute('disabled', 'disabled');
+      this.startButton.removeAttribute('disabled');
+    }
+  }
 }
+

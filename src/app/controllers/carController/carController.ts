@@ -28,6 +28,7 @@ export class CarController {
   }
 
   private async startRaceCar(): Promise<void> {
+    this.view.setRaceButtons(true);
     await this.prepareEngine();
     this.startAnimation();
   }
@@ -66,11 +67,12 @@ export class CarController {
   }
 
   private async stopRaceCar(): Promise<void> {
+    await CarsApi.stopCar(this.id);
+
     this.isEngineWork = false;
     this.currentPoint = 0;
     this.view.moveCarImage(this.currentPoint);
-
-    await CarsApi.stopCar(this.id);
+    this.view.setRaceButtons(false);
   }
 
 }
