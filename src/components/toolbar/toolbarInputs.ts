@@ -8,6 +8,8 @@ export const ToolbarInputs: Record<Inputs, DomElementAttribute> = {
     type: 'text',
     name: 'create-name',
     required: 'required',
+    minlength: '3',
+    pattern: '^[A-Z][a-zA-Z0-9 ]+$',
     autocomplete: 'off',
     placeholder: 'Car name'
   },
@@ -21,6 +23,8 @@ export const ToolbarInputs: Record<Inputs, DomElementAttribute> = {
     type: 'text',
     name: 'update-name',
     required: 'required',
+    minlength: '3',
+    pattern: '^[A-Z][a-zA-Z0-9 ]+$',
     autocomplete: 'off',
     placeholder: 'Car name'
   },

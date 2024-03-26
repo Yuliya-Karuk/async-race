@@ -57,6 +57,13 @@
   }
 }
 
+.input-error {
+  @include font(1.5rem, 700, normal, 0.05rem);
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-invalid);
+}
+
 .input-color {
   width: 25%;
   height: 40px;

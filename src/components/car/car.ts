@@ -1,12 +1,13 @@
+import { TCar } from '../../types/types';
 import { createElementWithProperties } from '../../utils/utils';
 import { BaseComponent } from '../baseComponent';
 import { SVGComponent } from '../svgComponent/svgComponent';
 import styles from './car.module.scss';
 
 export class Car extends BaseComponent{
-  private name: string;
-  private color: string;
-  private id: number;
+  public name: string;
+  public color: string;
+  public id: number;
   public winnersLink: HTMLAnchorElement;
   public garageLink: HTMLAnchorElement;
   public carName: HTMLHeadingElement;
@@ -17,11 +18,11 @@ export class Car extends BaseComponent{
   public carImage: HTMLDivElement;
   public carSvg: SVGComponent;
 
-  constructor(name: string, color: string, id: number) {
+  constructor(car: TCar) {
     super('div', [styles.car]);
-    this.name = name;
-    this.color = color;
-    this.id = id;
+    this.name = car.name;
+    this.color = car.color;
+    this.id = car.id;
 
     this.createContent();
   }

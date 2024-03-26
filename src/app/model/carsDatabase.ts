@@ -31,7 +31,7 @@ export class CarsDatabase {
     }
   }
 
-  public async createCar<T>(carData: T): Promise<T> {
+  public async createCar<T>(car: T): Promise<T> {
     try {
       const url = buildURL([this.baseUrl, this.garageEndpoint]);
       const response = await fetch(url, {
@@ -39,12 +39,32 @@ export class CarsDatabase {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify(carData),
+        body: JSON.stringify(car),
       });
+
       const createdCar: T = await response.json();
-      this.carsTotal += 1;
       return createdCar;
     } catch {
+      throw Error('Error');
+    }
+  }
+
+  public async updateCar(carId: number, carNewData: Partial<TCar>): Promise<TCar> {
+    const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
+
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(carNewData),
+      });
+
+      const updatedCar: TCar = await response.json();
+      console.log(updatedCar);
+      return updatedCar;
+    } catch (error) {
       throw Error('Error');
     }
   }

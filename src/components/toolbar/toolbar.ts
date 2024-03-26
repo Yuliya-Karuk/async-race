@@ -16,6 +16,8 @@ export class Toolbar extends BaseComponent{
   public updateInputName: HTMLInputElement;
   public updateInputColor: HTMLInputElement;
   public updateCarButton: HTMLButtonElement;
+  public createError: HTMLSpanElement;
+  public updateError: HTMLSpanElement;
 
   constructor() {
     super('div', [styles.toolbar]);
@@ -46,12 +48,14 @@ export class Toolbar extends BaseComponent{
   private renderCreateCarBlock(): void {
     this.createInputName = createElementWithProperties('input', [styles.inputName], ToolbarInputs.createName);
     this.createInputColor = createElementWithProperties('input', [styles.inputColor], ToolbarInputs.createColor);
+    this.createError = createElementWithProperties('span', [styles.inputError]);
     this.createCarButton = createElementWithProperties('button', ['btn', 'btn_centered'], { type: 'button' },
       [{ innerText: 'Create Car' }]);
 
     const createContainer = createElementWithProperties('div', [styles.controlsContainer], undefined, undefined, [
       this.createInputName,
       this.createInputColor,
+      this.createError,
       this.createCarButton,
     ]);
     this.appendChildren([createContainer]);
@@ -60,12 +64,14 @@ export class Toolbar extends BaseComponent{
   private renderUpdateCarBlock(): void {
     this.updateInputName = createElementWithProperties('input', [styles.inputName], ToolbarInputs.updateName);
     this.updateInputColor = createElementWithProperties('input', [styles.inputColor], ToolbarInputs.updateColor);
+    this.updateError = createElementWithProperties('span', [styles.inputError]);
     this.updateCarButton = createElementWithProperties('button', ['btn', 'btn_centered'], { type: 'button' },
       [{ innerText: 'Update Car' }]);
 
     const updateContainer = createElementWithProperties('div', [styles.controlsContainer], undefined, undefined, [
       this.updateInputName,
       this.updateInputColor,
+      this.updateError,
       this.updateCarButton,
     ]);
     this.appendChildren([updateContainer]);
