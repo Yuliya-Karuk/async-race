@@ -7,7 +7,6 @@ import { GarageView } from './garageView';
 
 export class Garage {
   public view: GarageView;
-  private cars: Car[] = [];
   private chosenCar: Car;
 
   constructor() {
@@ -28,11 +27,9 @@ export class Garage {
 
   public renderCars(cars: TCar[]): void {
     this.view.cleanCarsContainer();
-    this.cars = [];
 
     cars.forEach(oneCar => {
       const car = new Car(oneCar);
-      // this.cars.push(car);
       this.bindCarListeners(car);
       this.view.carsBlock.append(car.getNode());
     })
@@ -57,14 +54,12 @@ export class Garage {
   }
 
   private async handleUpdateCar(input: HTMLInputElement): Promise<void> {
-    console.log(this.checkValidityInput(input));
     if (this.checkValidityInput(input)) {
       const carNewData = {
         name: this.view.toolbar.updateInputName.value,
         color: this.view.toolbar.updateInputColor.value,
       }
 
-      console.log(this.chosenCar.id, carNewData);
       await CarsApi.updateCar(this.chosenCar.id, carNewData);
       this.loadPage(1);
     }
@@ -83,11 +78,17 @@ export class Garage {
 
   private bindCarListeners(car: Car): void {
     car.changeButton.addEventListener('click', () => this.chooseCar(car));
+    car.deleteButton.addEventListener('click', () => this.handleDeleteCar(car))
   }
 
   private chooseCar(car: Car): void {
     this.chosenCar = car;
     this.view.toolbar.updateInputName.value = car.name;
     this.view.toolbar.updateInputColor.value = car.color;
+  }
+
+  private async handleDeleteCar(car: Car): Promise<void> {
+    await CarsApi.deleteCar(car.id);
+    this.loadPage(1);
   }
 }

@@ -62,8 +62,19 @@ export class CarsDatabase {
       });
 
       const updatedCar: TCar = await response.json();
-      console.log(updatedCar);
       return updatedCar;
+    } catch (error) {
+      throw Error('Error');
+    }
+  }
+
+  public async deleteCar(carId: number): Promise<Response> {
+    const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+      });
+      return response
     } catch (error) {
       throw Error('Error');
     }

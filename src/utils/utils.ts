@@ -74,7 +74,3 @@ export function CheckRoute(route: string): Routes {
   }
   throw new Error(`404 Not Found`);
 }
-
-// export function getRandomNumber(min: number, max: number) {
-//   return Math.floor(Math.random() * (max - min + 1) + min);
-// }
