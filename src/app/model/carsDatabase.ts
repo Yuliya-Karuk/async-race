@@ -113,6 +113,20 @@ export class CarsDatabase {
     if (response.status === 500) return false;
     return true;
   }
+
+  public async stopCar(carId: number): Promise<Response> {
+    const queryParams = {
+      id: carId.toString(),
+      status: 'stopped',
+    };
+    const url = buildURL([this.baseUrl, this.engineEndpoint], queryParams);
+
+    const response = await fetch(url, {
+      method: 'PATCH',
+    });
+
+    return response;
+  }
 }
 
 export const CarsApi = new CarsDatabase();

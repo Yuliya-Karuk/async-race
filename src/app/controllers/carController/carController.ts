@@ -24,6 +24,7 @@ export class CarController {
 
   private bindRaceListeners(): void {
     this.view.startButton.addEventListener('click', () => this.startRaceCar());
+    this.view.stopButton.addEventListener('click', () => this.stopRaceCar());
   }
 
   private async startRaceCar(): Promise<void> {
@@ -45,7 +46,8 @@ export class CarController {
 
   private async startAnimation(): Promise<number> {
     const animate = () => {
-      this.view.carImage.style.transform = `translateX(${this.currentPoint}px)`;
+      this.view.moveCarImage(this.currentPoint);
+
       this.currentPoint += this.carSpeed;
 
       if (this.currentPoint <= this.raceLength && this.isEngineWork) {
@@ -60,8 +62,15 @@ export class CarController {
     requestAnimationFrame(animate);
     this.isEngineWork = await CarsApi.driveCar(this.id);
 
-
     return this.id;
+  }
+
+  private async stopRaceCar(): Promise<void> {
+    this.isEngineWork = false;
+    this.currentPoint = 0;
+    this.view.moveCarImage(this.currentPoint);
+
+    await CarsApi.stopCar(this.id);
   }
 
 }

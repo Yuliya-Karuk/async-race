@@ -68,4 +68,8 @@ export class Car extends BaseComponent{
       [this.carImage]);
     this.node.append(carTrack);
   }
+
+  public moveCarImage(newValue: number): void {
+    this.carImage.style.transform = `translateX(${newValue}px)`;
+  }
 }
