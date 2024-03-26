@@ -1,9 +1,10 @@
-import { TCar } from "../../types/types";
+import { TCar, TEngine } from "../../types/types";
 import { buildURL } from "../../utils/buildUrl";
 import { BaseUrl } from "../../utils/constants";
 
 export class CarsDatabase {
   private garageEndpoint: string = 'garage';
+  private engineEndpoint = 'engine';
   private carsPerPage: string = '7';
   private baseUrl: string = BaseUrl;
   public carsTotal: number;
@@ -14,9 +15,9 @@ export class CarsDatabase {
 
   public async getCars(pageNumber: number): Promise<TCar[]> {
     const queryParams = {
-        _page: pageNumber.toString(),
-        _limit: this.carsPerPage,
-      };
+      _page: pageNumber.toString(),
+      _limit: this.carsPerPage,
+    };
     const url = buildURL([this.baseUrl, this.garageEndpoint], queryParams);
 
     try {
@@ -78,6 +79,39 @@ export class CarsDatabase {
     } catch (error) {
       throw Error('Error');
     }
+  }
+
+  public async startCarEngine(carId: number): Promise<TEngine> {
+    const queryParams = {
+      id: carId.toString(),
+      status: 'started',
+    };
+    const url = buildURL([this.baseUrl, this.engineEndpoint], queryParams);
+
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+      });
+      const engineParams: TEngine = await response.json();
+      return engineParams;
+    } catch (error) {
+      throw Error('Error');
+    }
+  }
+
+  public async driveCar(carId: number): Promise<boolean> {
+    const queryParams = {
+      id: carId.toString(),
+      status: 'drive',
+    };
+    const url = buildURL([this.baseUrl, this.engineEndpoint], queryParams);
+
+    const response = await fetch(url, {
+      method: 'PATCH',
+    });
+
+    if (response.status === 500) return false;
+    return true;
   }
 }
 

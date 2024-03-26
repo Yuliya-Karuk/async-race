@@ -5,9 +5,9 @@ import { SVGComponent } from '../svgComponent/svgComponent';
 import styles from './car.module.scss';
 
 export class Car extends BaseComponent{
-  public name: string;
-  public color: string;
-  public id: number;
+  private name: string;
+  private color: string;
+  private id: number;
   public winnersLink: HTMLAnchorElement;
   public garageLink: HTMLAnchorElement;
   public carName: HTMLHeadingElement;

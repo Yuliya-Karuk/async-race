@@ -30,5 +30,6 @@
 
 .car-image {
   height: 100%;
+  width: fit-content;
   @include flex(flex-start, center);
 }
