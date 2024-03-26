@@ -1,7 +1,7 @@
 import { CarController } from '../../app/controllers/carController/carController';
 import { CarsApi } from '../../app/model/carsDatabase';
 import { TCar } from '../../types/types';
-import { isNotNullable } from '../../utils/utils';
+import { getRandomColor, getRandomName, isNotNullable } from '../../utils/utils';
 import { validationFunctions } from '../../utils/validityFunctions';
 import { GarageView } from './garageView';
 
@@ -38,6 +38,7 @@ export class Garage {
   private bindToolbarListeners(): void {
     this.view.toolbar.createCarButton.addEventListener('click',() => this.handleCreateCar(this.view.toolbar.createInputName))
     this.view.toolbar.updateCarButton.addEventListener('click',() => this.handleUpdateCar(this.view.toolbar.updateInputName))
+    this.view.toolbar.createCarsButton.addEventListener('click', () => this.create100Cars())
   }
 
   private async handleCreateCar(input: HTMLInputElement): Promise<void> {
@@ -45,10 +46,9 @@ export class Garage {
       const carData = {
         name: this.view.toolbar.createInputName.value,
         color: this.view.toolbar.createInputColor.value,
-        id: CarsApi.carsTotal + 1,
       }
 
-      await CarsApi.createCar<TCar>(carData);
+      await CarsApi.createCar(carData);
       this.loadPage(1);
     }
   }
@@ -89,6 +89,20 @@ export class Garage {
 
   private async handleDeleteCar(car: CarController): Promise<void> {
     await CarsApi.deleteCar(car.id);
+    this.loadPage(1);
+  }
+
+  private async create100Cars(): Promise<void> {
+    const carsArray = Array.from({length: 100}, () => ({
+      color: getRandomColor(),
+      name: getRandomName(),
+    }));
+
+    const promises = carsArray.map(async (carData) => {
+      await CarsApi.createCar(carData)
+    })
+    await Promise.all(promises);
+
     this.loadPage(1);
   }
 }

@@ -1,3 +1,4 @@
+import { CarNames } from '../data/carNames';
 import { Routes } from '../router/router.types';
 import { DomElementAttribute, DomElementProperties } from '../types/interfaces';
 
@@ -73,4 +74,20 @@ export function CheckRoute(route: string): Routes {
     return route as Routes.Garage;
   }
   throw new Error(`404 Not Found`);
+}
+
+function getRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min) + min); // Максимум не включается, минимум включается
+}
+
+export function getRandomColor(): string {
+	const color = '#' + Math.random().toString(16).slice(3, 9);
+  return color;
+}
+
+export function getRandomName(): string {
+  const brand = CarNames[getRandomNumber(0, CarNames.length)].brand;
+  const allBrandModels = CarNames[getRandomNumber(0, CarNames.length)].models;
+  const model = allBrandModels[getRandomNumber(0, allBrandModels.length)];
+  return `${brand} ${model}`;
 }

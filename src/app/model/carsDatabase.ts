@@ -32,18 +32,20 @@ export class CarsDatabase {
     }
   }
 
-  public async createCar<T>(car: T): Promise<T> {
+  public async createCar(carData: Omit<TCar, 'id'>): Promise<TCar> {
+    const url = buildURL([this.baseUrl, this.garageEndpoint]);
+
     try {
-      const url = buildURL([this.baseUrl, this.garageEndpoint]);
       const response = await fetch(url, {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify(car),
+        body: JSON.stringify(carData),
       });
 
-      const createdCar: T = await response.json();
+      const createdCar: TCar = await response.json();
+      console.log(createdCar);
       return createdCar;
     } catch {
       throw Error('Error');

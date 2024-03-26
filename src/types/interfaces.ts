@@ -12,3 +12,8 @@ export interface DomElementAttribute {
 export interface DomElementProperties {
   [key: string]: string;
 }
+
+export interface CarBrand {
+  brand: string;
+  models: string[];
+}
