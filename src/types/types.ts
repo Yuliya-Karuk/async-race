@@ -13,6 +13,6 @@ export type TCar = {
 };
 
 export type CarsPageParams = {
-  pageNum?: number;
+  pageNumber?: number;
   carsPerPage?: number;
 };

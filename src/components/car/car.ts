@@ -6,6 +6,7 @@ import styles from './car.module.scss';
 export class Car extends BaseComponent{
   private name: string;
   private color: string;
+  private id: number;
   public winnersLink: HTMLAnchorElement;
   public garageLink: HTMLAnchorElement;
   public carName: HTMLHeadingElement;
@@ -16,10 +17,11 @@ export class Car extends BaseComponent{
   public carImage: HTMLDivElement;
   public carSvg: SVGComponent;
 
-  constructor(name: string, color: string) {
+  constructor(name: string, color: string, id: number) {
     super('div', [styles.car]);
     this.name = name;
     this.color = color;
+    this.id = id;
 
     this.createContent();
   }
@@ -57,7 +59,7 @@ export class Car extends BaseComponent{
   }
 
   private createCarTrack(): void {
-    this.carSvg = new SVGComponent(this.color);
+    this.carSvg = new SVGComponent(this.color, this.id);
     this.carImage = createElementWithProperties('div', [styles.carImage], undefined, undefined, [
       this.carSvg.getNode(),
     ]);

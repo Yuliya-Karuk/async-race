@@ -1,4 +1,4 @@
-import { checkDOMElement, getRandomNumber } from '../../utils/utils';
+import { checkDOMElement } from '../../utils/utils';
 import styles from './svgComponent.module.scss';
 
 export class SVGComponent{
@@ -7,8 +7,8 @@ export class SVGComponent{
   private spritePath = './sprite/sprite.svg';
   private svg: SVGElement;
 
-  constructor(color: string) {
-    const carModel = getRandomNumber(1, 7);
+  constructor(color: string, carId: number) {
+    const carModel = carId % 7;
 
     this.svg = checkDOMElement(SVGElement, document.createElementNS(this.svgNamespace, 'svg'));
     const use = checkDOMElement(SVGUseElement, document.createElementNS(this.svgNamespace, 'use'));
@@ -21,7 +21,6 @@ export class SVGComponent{
   }
 
   public getNode() {
-    console.log(this.svg);
     return this.svg;
   }
 
