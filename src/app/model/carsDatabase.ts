@@ -110,6 +110,7 @@ export class CarsDatabase {
     if (response.status === 500) {
       return false;
     }
+
     return true;
   }
 

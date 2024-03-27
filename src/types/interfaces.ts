@@ -17,3 +17,8 @@ export interface CarBrand {
   brand: string;
   models: string[];
 }
+
+export interface FirstFinisher {
+  id: number;
+  startTime: number;
+}

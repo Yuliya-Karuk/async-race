@@ -1,4 +1,5 @@
 import { Car } from '../../../components/car/car';
+import { FirstFinisher } from '../../../types/interfaces';
 import { TCar } from '../../../types/types';
 import { findTrackLength } from '../../../utils/utils';
 import { CarsApi } from '../../model/carsDatabase';
@@ -13,6 +14,7 @@ export class CarController {
   private carSpeed: number;
   private currentPoint: number = 0;
   private isEngineWork: boolean;
+  private isFinished: boolean;
 
   constructor(car: TCar) {
     this.id = car.id;
@@ -24,7 +26,7 @@ export class CarController {
 
   private bindRaceListeners(): void {
     this.view.startButton.addEventListener('click', () => this.startRaceCar());
-    this.view.stopButton.addEventListener('click', () => this.stopRaceCar());
+    this.view.stopButton.addEventListener('click', () => this.stopRaceCar(false));
   }
 
   private async startRaceCar(): Promise<void> {
@@ -33,7 +35,7 @@ export class CarController {
     this.startAnimation();
   }
 
-  private async prepareEngine(): Promise<void> {
+  public async prepareEngine(): Promise<void> {
     const { velocity, distance } = await CarsApi.startCarEngine(this.id);
     const AnimationTimeInS = distance / velocity / 1000;
 
@@ -43,35 +45,42 @@ export class CarController {
 
     this.currentPoint = 0;
     this.isEngineWork = true;
+    this.isFinished = false;
   }
 
-  private async startAnimation(): Promise<number> {
+  public async startAnimation(): Promise<FirstFinisher | never> {
     const animate = (): void => {
       this.view.moveCarImage(this.currentPoint);
 
       this.currentPoint += this.carSpeed;
 
-      if (this.currentPoint <= this.raceLength && this.isEngineWork) {
+      if (this.currentPoint < this.raceLength && this.isEngineWork) {
         requestAnimationFrame(animate);
-      } else if (this.currentPoint > this.raceLength && this.isEngineWork) {
-        console.log('race ended');
-      } else {
-        console.log('broken');
+      } else if (this.currentPoint >= this.raceLength && this.isEngineWork) {
+        this.isFinished = true;
       }
     };
 
     requestAnimationFrame(animate);
+    const startTime = Date.now();
+
     this.isEngineWork = await CarsApi.driveCar(this.id);
 
-    return this.id;
+    if (this.isEngineWork === false && this.isFinished === false) {
+      return Promise.reject();
+    }
+
+    return { id: this.id, startTime };
   }
 
-  private async stopRaceCar(): Promise<void> {
+  public async stopRaceCar(isCommon: boolean): Promise<void> {
     await CarsApi.stopCar(this.id);
 
     this.isEngineWork = false;
     this.currentPoint = 0;
     this.view.moveCarImage(this.currentPoint);
-    this.view.setRaceButtons(false);
+    if (!isCommon) {
+      this.view.setRaceButtons(false);
+    }
   }
 }

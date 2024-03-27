@@ -97,4 +97,9 @@ export class Car extends BaseComponent {
       this.startButton.removeAttribute('disabled');
     }
   }
+
+  public disableRaceButton(): void {
+    this.startButton.setAttribute('disabled', 'disabled');
+    this.stopButton.setAttribute('disabled', 'disabled');
+  }
 }

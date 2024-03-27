@@ -112,6 +112,25 @@ export class Toolbar extends BaseComponent {
     this.appendChildren([pgnContainer]);
   }
 
+  public setStartButtonsState(): void {
+    this.resetButton.setAttribute('disabled', 'disabled');
+    this.updateCarButton.setAttribute('disabled', 'disabled');
+  }
+
+  public enableUpdateButton(): void {
+    this.updateCarButton.removeAttribute('disabled');
+  }
+
+  public resetCreateInputs(): void {
+    this.createInputName.value = '';
+    this.createInputColor.value = '#000000';
+  }
+
+  public resetUpdateInputs(): void {
+    this.updateInputName.value = '';
+    this.updateInputColor.value = '#000000';
+  }
+
   public setPagination(currentPage: number, carsCount: number): void {
     this.pgnNext.removeAttribute('disabled');
     this.pgnPrevious.removeAttribute('disabled');
@@ -126,5 +145,15 @@ export class Toolbar extends BaseComponent {
     } else if (currentPage === pagesCount) {
       this.pgnNext.setAttribute('disabled', 'disabled');
     }
+  }
+
+  public disableAllButtons(): void {
+    this.pgnNext.setAttribute('disabled', 'disabled');
+    this.pgnPrevious.setAttribute('disabled', 'disabled');
+    this.raceButton.setAttribute('disabled', 'disabled');
+    this.resetButton.setAttribute('disabled', 'disabled');
+    this.createCarButton.setAttribute('disabled', 'disabled');
+    this.createCarsButton.setAttribute('disabled', 'disabled');
+    this.updateCarButton.setAttribute('disabled', 'disabled');
   }
 }
