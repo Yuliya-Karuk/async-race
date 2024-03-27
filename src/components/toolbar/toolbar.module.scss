@@ -78,6 +78,10 @@
   height: 50px;
   border-radius: 10px;
   padding: 0;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .pgn-icon {
@@ -95,4 +99,10 @@
 .pgn-text {
   @include font(2.4rem, 700, normal, 0.05rem);
   color: var(--color-font-light);
+}
+
+.pgn-total {
+  @include font(2.4rem, 700, normal, 0.05rem);
+  color: var(--color-primary-bright);
+  text-transform: uppercase;
 }

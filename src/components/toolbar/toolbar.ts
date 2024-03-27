@@ -21,6 +21,7 @@ export class Toolbar extends BaseComponent {
   public pgnNext: HTMLButtonElement;
   public pgnText: HTMLParagraphElement;
   public pgnPrevious: HTMLButtonElement;
+  private total: HTMLHeadingElement;
 
   constructor() {
     super('div', [styles.toolbar]);
@@ -90,6 +91,7 @@ export class Toolbar extends BaseComponent {
       undefined,
       [createElementWithProperties('span', [styles.pgnIcon])]
     );
+
     this.pgnPrevious = createElementWithProperties(
       'button',
       ['btn', styles.pgnButton, 'pgn-button_previous'],
@@ -97,17 +99,32 @@ export class Toolbar extends BaseComponent {
       undefined,
       [createElementWithProperties('span', [styles.pgnIcon])]
     );
+
     this.pgnText = createElementWithProperties('p', [styles.pgnText]);
+    this.total = createElementWithProperties('h4', [styles.pgnTotal]);
 
     const pgnContainer = createElementWithProperties('div', [styles.pgnContainer], undefined, undefined, [
       this.pgnPrevious,
       this.pgnText,
       this.pgnNext,
+      this.total,
     ]);
     this.appendChildren([pgnContainer]);
   }
 
-  public setPaginationNumber(currentPage: number, pagesCount: number): void {
+  public setPagination(currentPage: number, carsCount: number): void {
+    this.pgnNext.removeAttribute('disabled');
+    this.pgnPrevious.removeAttribute('disabled');
+
+    const pagesCount = Math.ceil(carsCount / 7);
+
     this.pgnText.innerText = `${currentPage} / ${pagesCount}`;
+    this.total.innerText = `Total cars: ${carsCount}`;
+
+    if (currentPage === 1) {
+      this.pgnPrevious.setAttribute('disabled', 'disabled');
+    } else if (currentPage === pagesCount) {
+      this.pgnNext.setAttribute('disabled', 'disabled');
+    }
   }
 }

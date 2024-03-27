@@ -8,6 +8,7 @@ import { GarageView } from './garageView';
 export class Garage {
   public view: GarageView;
   private chosenCar: CarController;
+  private pageNumber: number;
 
   constructor() {
     this.view = new GarageView();
@@ -21,10 +22,10 @@ export class Garage {
   }
 
   public async loadPage(pageNumber: number = 1): Promise<void> {
-    const carsPage = await CarsApi.getCars(pageNumber);
+    this.pageNumber = pageNumber;
+    const carsPage = await CarsApi.getCars(this.pageNumber);
 
-    const pagesCount = Math.ceil(CarsApi.carsTotal / 7);
-    this.view.toolbar.setPaginationNumber(pageNumber, pagesCount);
+    this.view.toolbar.setPagination(this.pageNumber, CarsApi.carsTotal);
 
     this.renderCars(carsPage);
   }
@@ -43,10 +44,15 @@ export class Garage {
     this.view.toolbar.createCarButton.addEventListener('click', () =>
       this.handleCreateCar(this.view.toolbar.createInputName)
     );
+
     this.view.toolbar.updateCarButton.addEventListener('click', () =>
       this.handleUpdateCar(this.view.toolbar.updateInputName)
     );
+
     this.view.toolbar.createCarsButton.addEventListener('click', () => this.create100Cars());
+
+    this.view.toolbar.pgnNext.addEventListener('click', () => this.loadPage(this.pageNumber + 1));
+    this.view.toolbar.pgnPrevious.addEventListener('click', () => this.loadPage(this.pageNumber - 1));
   }
 
   private async handleCreateCar(input: HTMLInputElement): Promise<void> {
@@ -57,7 +63,7 @@ export class Garage {
       };
 
       await CarsApi.createCar(carData);
-      this.loadPage(1);
+      this.loadPage(this.pageNumber);
     }
   }
 
@@ -69,7 +75,7 @@ export class Garage {
       };
 
       await CarsApi.updateCar(this.chosenCar.id, carNewData);
-      this.loadPage(1);
+      this.loadPage(this.pageNumber);
     }
   }
 
@@ -97,7 +103,7 @@ export class Garage {
 
   private async handleDeleteCar(car: CarController): Promise<void> {
     await CarsApi.deleteCar(car.id);
-    this.loadPage(1);
+    this.loadPage(this.pageNumber);
   }
 
   private async create100Cars(): Promise<void> {
@@ -111,6 +117,6 @@ export class Garage {
     });
     await Promise.all(promises);
 
-    this.loadPage(1);
+    this.loadPage(this.pageNumber);
   }
 }
