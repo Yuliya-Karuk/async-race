@@ -28,24 +28,8 @@ export class Car extends BaseComponent {
   }
 
   private createContent(): void {
-    this.createRaceControls();
-    this.createCarTrack();
     this.createCarControls();
-  }
-
-  private createRaceControls(): void {
-    this.startButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' }, [
-      { innerText: 'Start' },
-    ]);
-    this.stopButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' }, [
-      { innerText: 'Stop' },
-    ]);
-    const raceControlsContainer = createElementWithProperties('div', [styles.raceControls], undefined, undefined, [
-      this.startButton,
-      this.stopButton,
-    ]);
-    this.setRaceButtons(false);
-    this.node.append(raceControlsContainer);
+    this.createCarTrack();
   }
 
   private createCarControls(): void {
@@ -65,12 +49,39 @@ export class Car extends BaseComponent {
   }
 
   private createCarTrack(): void {
+    this.startButton = createElementWithProperties(
+      'button',
+      ['btn', styles.raceBtn, 'race-btn_start'],
+      { type: 'button' },
+      [{ innerText: 'R' }]
+    );
+    this.stopButton = createElementWithProperties(
+      'button',
+      ['btn', styles.raceBtn, 'race-btn_stop'],
+      { type: 'button' },
+      [{ innerText: 'S' }]
+    );
+    const raceControlsContainer = createElementWithProperties('div', [styles.raceControls], undefined, undefined, [
+      this.startButton,
+      this.stopButton,
+    ]);
+
     this.carSvg = new SVGComponent(this.color, this.id);
     this.carImage = createElementWithProperties('div', [styles.carImage], undefined, undefined, [
       this.carSvg.getNode(),
     ]);
-    const carTrack = createElementWithProperties('div', [styles.carTrack], undefined, undefined, [this.carImage]);
-    this.node.append(carTrack);
+    const carTrack = createElementWithProperties('div', [styles.carTrack], undefined, undefined, [
+      raceControlsContainer,
+      this.carImage,
+    ]);
+
+    const trackContainer = createElementWithProperties('div', [styles.trackContainer], undefined, undefined, [
+      raceControlsContainer,
+      carTrack,
+    ]);
+
+    this.setRaceButtons(false);
+    this.node.append(trackContainer);
   }
 
   public moveCarImage(newValue: number): void {

@@ -21,11 +21,11 @@
 
   @include media-hover {
     &:hover {
-      filter: drop-shadow(2px 3px 3px var(--color-shadow-dark));
+      filter: drop-shadow(2px 3px 3px var(--color-hover));
     }
   }
   gap: 10px;
-  color: var(--color-font-dark);
+  color: var(--color-font-light);
 
   &:active {
     opacity: 0.7;

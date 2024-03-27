@@ -91,3 +91,9 @@ export function getRandomName(): string {
   const model = allBrandModels[getRandomNumber(0, allBrandModels.length)];
   return `${brand} ${model}`;
 }
+
+export function findTrackLength(): number {
+  const pageWidth = window.innerWidth > 1400 ? 1400 : window.innerWidth;
+  const trackLength = pageWidth - 2 * 20 - 2 * 10 - 80 - 40;
+  return trackLength;
+}

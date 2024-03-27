@@ -85,14 +85,14 @@ export class Toolbar extends BaseComponent {
   private renderPagination(): void {
     this.pgnNext = createElementWithProperties(
       'button',
-      [styles.pgnButton, 'pgn-button_next'],
+      ['btn', styles.pgnButton, 'pgn-button_next'],
       { type: 'button' },
       undefined,
       [createElementWithProperties('span', [styles.pgnIcon])]
     );
     this.pgnPrevious = createElementWithProperties(
       'button',
-      [styles.pgnButton, 'pgn-button_previous'],
+      ['btn', styles.pgnButton, 'pgn-button_previous'],
       { type: 'button' },
       undefined,
       [createElementWithProperties('span', [styles.pgnIcon])]

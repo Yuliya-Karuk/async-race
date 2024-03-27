@@ -1,5 +1,6 @@
 import { Car } from '../../../components/car/car';
 import { TCar } from '../../../types/types';
+import { findTrackLength } from '../../../utils/utils';
 import { CarsApi } from '../../model/carsDatabase';
 
 export class CarController {
@@ -36,7 +37,7 @@ export class CarController {
     const { velocity, distance } = await CarsApi.startCarEngine(this.id);
     const AnimationTimeInS = distance / velocity / 1000;
 
-    this.raceLength = window.innerWidth - 40 - 20 - 80;
+    this.raceLength = findTrackLength();
 
     this.carSpeed = this.raceLength / AnimationTimeInS / 60;
 
