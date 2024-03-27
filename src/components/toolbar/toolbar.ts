@@ -18,6 +18,9 @@ export class Toolbar extends BaseComponent{
   public updateCarButton: HTMLButtonElement;
   public createError: HTMLSpanElement;
   public updateError: HTMLSpanElement;
+  public pgnNext: HTMLButtonElement;
+  public pgnText: HTMLParagraphElement;
+  public pgnPrevious: HTMLButtonElement;
 
   constructor() {
     super('div', [styles.toolbar]);
@@ -27,6 +30,7 @@ export class Toolbar extends BaseComponent{
     this.renderRaceBlock();
     this.renderCreateCarBlock();
     this.renderUpdateCarBlock();
+    this.renderPagination();
   }
 
   private renderRaceBlock(): void {
@@ -75,5 +79,26 @@ export class Toolbar extends BaseComponent{
       this.updateCarButton,
     ]);
     this.appendChildren([updateContainer]);
+  }
+
+  private renderPagination(): void {
+    this.pgnNext = createElementWithProperties('button', [styles.pgnButton, 'pgn-button_next'], { type: 'button' }, undefined, [
+       createElementWithProperties('span', [styles.pgnIcon]),
+    ]);
+    this.pgnPrevious = createElementWithProperties('button', [styles.pgnButton, 'pgn-button_previous'], { type: 'button' }, undefined, [
+       createElementWithProperties('span', [styles.pgnIcon]),
+    ]);
+    this.pgnText = createElementWithProperties('p', [styles.pgnText]);
+
+    const pgnContainer = createElementWithProperties('div', [styles.pgnContainer], undefined, undefined, [
+      this.pgnPrevious,
+      this.pgnText,
+      this.pgnNext,
+    ]);
+    this.appendChildren([pgnContainer]);
+  }
+
+  public setPaginationNumber(currentPage: number, pagesCount: number): void {
+    this.pgnText.innerText = `${currentPage} / ${pagesCount}`;
   }
 }

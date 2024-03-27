@@ -22,5 +22,10 @@
 }
 
 .header-title {
+  @include font(2rem, 700, 1.2);
+}
+
+.header-name {
   @include font(3rem, 700, 1.2);
+  text-transform: uppercase;
 }

@@ -22,6 +22,10 @@ export class Garage {
 
   public async loadPage(pageNumber: number = 1): Promise<void> {
     const carsPage = await CarsApi.getCars(pageNumber);
+
+    const pagesCount = Math.ceil(CarsApi.carsTotal / 7)
+    this.view.toolbar.setPaginationNumber(pageNumber, pagesCount);
+
     this.renderCars(carsPage);
   }
 
