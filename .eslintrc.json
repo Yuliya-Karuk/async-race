@@ -6,7 +6,7 @@
     "node": true
   },
   "extends": [
-    "airbnb",
+    "airbnb-base",
     "airbnb-typescript",
     "eslint:recommended",
     "plugin:import/recommended",
@@ -31,7 +31,7 @@
   ],
   "rules": {
     "no-debugger": "off",
-    "no-console": ["warning", { "allow": ["warn", "error"] }],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
     "class-methods-use-this": "off",
     "import/extensions": "off",
     "prettier/prettier": "error",
@@ -68,6 +68,7 @@
         "allowDestructuring": true,
         "allowedNames": ["context"]
       }
-    ]
+    ],
+    "react/jsx-filename-extension": "off"
   }
 }

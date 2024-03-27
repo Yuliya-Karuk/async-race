@@ -1,6 +1,6 @@
-import { TCar, TEngine } from "../../types/types";
-import { buildURL } from "../../utils/buildUrl";
-import { BaseUrl } from "../../utils/constants";
+import { TCar, TEngine } from '../../types/types';
+import { buildURL } from '../../utils/buildUrl';
+import { BaseUrl } from '../../utils/constants';
 
 export class CarsDatabase {
   private garageEndpoint: string = 'garage';
@@ -8,10 +8,6 @@ export class CarsDatabase {
   private carsPerPage: string = '7';
   private baseUrl: string = BaseUrl;
   public carsTotal: number;
-
-  constructor() {
-
-  }
 
   public async getCars(pageNumber: number): Promise<TCar[]> {
     const queryParams = {
@@ -45,7 +41,6 @@ export class CarsDatabase {
       });
 
       const createdCar: TCar = await response.json();
-      console.log(createdCar);
       return createdCar;
     } catch {
       throw Error('Error');
@@ -77,7 +72,7 @@ export class CarsDatabase {
       const response = await fetch(url, {
         method: 'DELETE',
       });
-      return response
+      return response;
     } catch (error) {
       throw Error('Error');
     }
@@ -112,7 +107,9 @@ export class CarsDatabase {
       method: 'PATCH',
     });
 
-    if (response.status === 500) return false;
+    if (response.status === 500) {
+      return false;
+    }
     return true;
   }
 

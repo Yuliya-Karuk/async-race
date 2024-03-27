@@ -15,7 +15,7 @@ export class AppController {
     this.router = router;
     this.body = body;
     this.headerController = new HeaderController(this.router);
-    this.footerController = new FooterController;
+    this.footerController = new FooterController();
     this.mainController = new MainController();
   }
 
@@ -23,7 +23,7 @@ export class AppController {
     this.body.append(
       this.headerController.view.getNode(),
       this.mainController.main.getNode(),
-      this.footerController.view.getNode(),
+      this.footerController.view.getNode()
     );
 
     this.headerController.setLinks(this.router.currentPage);

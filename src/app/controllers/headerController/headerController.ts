@@ -11,7 +11,7 @@ export class HeaderController {
   constructor(router: Router) {
     this.router = router;
     this.page = Routes.Winners;
-    this.view = new Header()
+    this.view = new Header();
 
     this.bindListeners();
   }
@@ -30,7 +30,7 @@ export class HeaderController {
     this.setLinks(this.page);
   }
 
-  public setLinks(page: Routes) {
+  public setLinks(page: Routes): void {
     this.view.setLinks(page);
   }
 }

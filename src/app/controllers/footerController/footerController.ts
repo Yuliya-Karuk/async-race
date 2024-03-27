@@ -4,6 +4,6 @@ export class FooterController {
   public view: Footer;
 
   constructor() {
-    this.view = new Footer()
+    this.view = new Footer();
   }
 }

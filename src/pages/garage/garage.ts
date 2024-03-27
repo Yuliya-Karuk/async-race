@@ -23,7 +23,7 @@ export class Garage {
   public async loadPage(pageNumber: number = 1): Promise<void> {
     const carsPage = await CarsApi.getCars(pageNumber);
 
-    const pagesCount = Math.ceil(CarsApi.carsTotal / 7)
+    const pagesCount = Math.ceil(CarsApi.carsTotal / 7);
     this.view.toolbar.setPaginationNumber(pageNumber, pagesCount);
 
     this.renderCars(carsPage);
@@ -36,13 +36,17 @@ export class Garage {
       const car = new CarController(oneCar);
       this.bindCarListeners(car);
       this.view.carsBlock.append(car.view.getNode());
-    })
+    });
   }
 
   private bindToolbarListeners(): void {
-    this.view.toolbar.createCarButton.addEventListener('click',() => this.handleCreateCar(this.view.toolbar.createInputName))
-    this.view.toolbar.updateCarButton.addEventListener('click',() => this.handleUpdateCar(this.view.toolbar.updateInputName))
-    this.view.toolbar.createCarsButton.addEventListener('click', () => this.create100Cars())
+    this.view.toolbar.createCarButton.addEventListener('click', () =>
+      this.handleCreateCar(this.view.toolbar.createInputName)
+    );
+    this.view.toolbar.updateCarButton.addEventListener('click', () =>
+      this.handleUpdateCar(this.view.toolbar.updateInputName)
+    );
+    this.view.toolbar.createCarsButton.addEventListener('click', () => this.create100Cars());
   }
 
   private async handleCreateCar(input: HTMLInputElement): Promise<void> {
@@ -50,7 +54,7 @@ export class Garage {
       const carData = {
         name: this.view.toolbar.createInputName.value,
         color: this.view.toolbar.createInputColor.value,
-      }
+      };
 
       await CarsApi.createCar(carData);
       this.loadPage(1);
@@ -62,7 +66,7 @@ export class Garage {
       const carNewData = {
         name: this.view.toolbar.updateInputName.value,
         color: this.view.toolbar.updateInputColor.value,
-      }
+      };
 
       await CarsApi.updateCar(this.chosenCar.id, carNewData);
       this.loadPage(1);
@@ -82,7 +86,7 @@ export class Garage {
 
   private bindCarListeners(car: CarController): void {
     car.view.changeButton.addEventListener('click', () => this.chooseCar(car));
-    car.view.deleteButton.addEventListener('click', () => this.handleDeleteCar(car))
+    car.view.deleteButton.addEventListener('click', () => this.handleDeleteCar(car));
   }
 
   private chooseCar(car: CarController): void {
@@ -97,14 +101,14 @@ export class Garage {
   }
 
   private async create100Cars(): Promise<void> {
-    const carsArray = Array.from({length: 100}, () => ({
+    const carsArray = Array.from({ length: 100 }, () => ({
       color: getRandomColor(),
       name: getRandomName(),
     }));
 
-    const promises = carsArray.map(async (carData) => {
-      await CarsApi.createCar(carData)
-    })
+    const promises = carsArray.map(async carData => {
+      await CarsApi.createCar(carData);
+    });
     await Promise.all(promises);
 
     this.loadPage(1);

@@ -1,16 +1,15 @@
-import { QueryParams } from "../types/types";
+import { QueryParams } from '../types/types';
 
 function buildQueryParams(queryParams: QueryParams): string {
-  let params = '';
+  const params = Object.entries(queryParams)
+    .map(([key, value]) => `&${key}=${value}`)
+    .join('');
 
-  for (const [key, value] of Object.entries(queryParams)) {
-    params += `&${key}=${value}`;
-  }
   return params.slice(1);
 }
 
 export function buildURL(path: string[], queryParams?: QueryParams): string {
-  let url = path.join('/');
+  const url = path.join('/');
   let params = '';
 
   if (queryParams) {

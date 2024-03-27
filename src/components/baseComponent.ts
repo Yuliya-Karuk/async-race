@@ -1,13 +1,13 @@
-import { DomElementAttribute, DomElementProperties } from "../types/interfaces";
+import { DomElementAttribute, DomElementProperties } from '../types/interfaces';
 
-export class BaseComponent<T extends HTMLElement = HTMLElement>{
+export class BaseComponent<T extends HTMLElement = HTMLElement> {
   protected node: T;
 
   constructor(
     tagName: keyof HTMLElementTagNameMap,
     classNames: string[] = [],
     attr?: DomElementAttribute,
-    props?: DomElementProperties[] ,
+    props?: DomElementProperties[],
     children: HTMLElementTagNameMap[keyof HTMLElementTagNameMap][] = []
   ) {
     this.node = document.createElement(tagName) as T;
@@ -35,10 +35,9 @@ export class BaseComponent<T extends HTMLElement = HTMLElement>{
     });
   }
 
-  public getNode() {
+  public getNode(): T {
     return this.node;
   }
-
 
   public setAttributes(attr: DomElementAttribute): void {
     for (let i = 0; i < Object.keys(attr).length; i += 1) {
@@ -59,11 +58,11 @@ export class BaseComponent<T extends HTMLElement = HTMLElement>{
     this.node.classList.toggle(className);
   }
 
-  public destroyChildren() {
+  public destroyChildren(): void {
     this.node.replaceChildren();
   }
 
-  public destroy() {
+  public destroy(): void {
     this.destroyChildren();
     this.node.remove();
   }

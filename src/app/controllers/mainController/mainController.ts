@@ -6,7 +6,7 @@ import { Routes } from '../../../router/router.types';
 export class MainController {
   public main: Main;
   private page: Garage | Winners;
-  private pages: { garage?: Garage; winners?: Winners};
+  private pages: { garage?: Garage; winners?: Winners };
   // private viewName: RaceViews;
 
   constructor() {
@@ -17,9 +17,12 @@ export class MainController {
   public async setView(location: Routes): Promise<void> {
     switch (location) {
       case Routes.Winners:
-        const { Winners } = await import('../../../pages/winners/winners');
-        this.page = new Winners()
-        // this.controller.main.setContent(new Winners());
+        if (!this.pages.winners) {
+          const { Winners } = await import('../../../pages/winners/winners');
+          this.pages.winners = new Winners();
+        }
+
+        this.page = this.pages.winners;
         break;
       default:
         if (!this.pages.garage) {
@@ -32,5 +35,4 @@ export class MainController {
         this.main.setContent(this.page.view.getNode());
     }
   }
-
 }

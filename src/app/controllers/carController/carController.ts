@@ -1,7 +1,6 @@
-import { Car } from "../../../components/car/car";
-import { TCar } from "../../../types/types";
-import { CarsApi } from "../../model/carsDatabase";
-
+import { Car } from '../../../components/car/car';
+import { TCar } from '../../../types/types';
+import { CarsApi } from '../../model/carsDatabase';
 
 export class CarController {
   public view: Car;
@@ -35,7 +34,7 @@ export class CarController {
 
   private async prepareEngine(): Promise<void> {
     const { velocity, distance } = await CarsApi.startCarEngine(this.id);
-    const AnimationTimeInS = (distance / velocity) / 1000;
+    const AnimationTimeInS = distance / velocity / 1000;
 
     this.raceLength = window.innerWidth - 40 - 20 - 80;
 
@@ -46,14 +45,14 @@ export class CarController {
   }
 
   private async startAnimation(): Promise<number> {
-    const animate = () => {
+    const animate = (): void => {
       this.view.moveCarImage(this.currentPoint);
 
       this.currentPoint += this.carSpeed;
 
       if (this.currentPoint <= this.raceLength && this.isEngineWork) {
         requestAnimationFrame(animate);
-      } else if ((this.currentPoint > this.raceLength && this.isEngineWork)) {
+      } else if (this.currentPoint > this.raceLength && this.isEngineWork) {
         console.log('race ended');
       } else {
         console.log('broken');
@@ -74,5 +73,4 @@ export class CarController {
     this.view.moveCarImage(this.currentPoint);
     this.view.setRaceButtons(false);
   }
-
 }

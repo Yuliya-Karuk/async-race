@@ -1,36 +1,33 @@
 .toolbar {
-  width: 100%;
   @include flex(space-between, center);
   flex-wrap: wrap;
   row-gap: 20px;
+  width: 100%;
 }
 
 .controls-container {
-  width: 30%;
   @include flex(space-between, center);
-  flex-wrap: wrap;
-  row-gap: 10px;
 
   @include media-laptop {
     width: 45%;
   }
+  flex-wrap: wrap;
+  row-gap: 10px;
+  width: 30%;
 }
 
 .race-container {
-  width: 35%;
   @include flex(flex-start, center);
-  gap: 3%;
 
   @include media-laptop {
-    width: 100%;
     justify-content: center;
+    width: 100%;
   }
+  gap: 3%;
+  width: 35%;
 }
 
 .input-name {
-  width: 70%;
-  height: 40px;
-
   @extend %transition;
 
   @include font(1.6rem, 700, 1.25);
@@ -40,7 +37,8 @@
       box-shadow: 0 0 2px 1px rgb(0 0 0 / 40%);
     }
   }
-
+  width: 70%;
+  height: 40px;
   padding: 10px;
   color: var(--color-font-dark);
   background: rgb(255 255 255 / 70%);
@@ -68,16 +66,16 @@
 }
 
 .pgn-container {
-  width: 100%;
   @include flex(center, center);
   gap: 3%;
+  width: 100%;
 }
 
 .pgn-button {
+  @include flex(center, center);
   width: 50px;
   height: 50px;
   background-color: var(--color-font-dark);
-  @include flex(center, center);
   border-radius: 10px;
 }
 

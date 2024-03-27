@@ -28,9 +28,9 @@
   }
 
   &_centered {
-    margin: 0 auto;
     @include flex(center, center);
     flex-wrap: wrap;
+    margin: 0 auto;
   }
 }
 

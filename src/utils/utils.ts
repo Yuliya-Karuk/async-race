@@ -14,7 +14,7 @@ export function createElementWithProperties<K extends keyof HTMLElementTagNameMa
   classNames: string[],
   attr?: DomElementAttribute,
   props?: DomElementProperties[],
-  children?: (HTMLElementTagNameMap[keyof HTMLElementTagNameMap] | SVGElement)[],
+  children?: (HTMLElementTagNameMap[keyof HTMLElementTagNameMap] | SVGElement)[]
 ): HTMLElementTagNameMap[K] {
   const element = document.createElement(tagName);
 
@@ -76,17 +76,17 @@ export function CheckRoute(route: string): Routes {
   throw new Error(`404 Not Found`);
 }
 
-function getRandomNumber(min: number, max: number) {
+function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min) + min); // Максимум не включается, минимум включается
 }
 
 export function getRandomColor(): string {
-	const color = '#' + Math.random().toString(16).slice(3, 9);
+  const color = `#${Math.random().toString(16).slice(3, 9)}`;
   return color;
 }
 
 export function getRandomName(): string {
-  const brand = CarNames[getRandomNumber(0, CarNames.length)].brand;
+  const { brand } = CarNames[getRandomNumber(0, CarNames.length)];
   const allBrandModels = CarNames[getRandomNumber(0, CarNames.length)].models;
   const model = allBrandModels[getRandomNumber(0, allBrandModels.length)];
   return `${brand} ${model}`;

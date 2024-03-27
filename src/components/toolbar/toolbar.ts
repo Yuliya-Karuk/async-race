@@ -3,7 +3,7 @@ import { BaseComponent } from '../baseComponent';
 import styles from './toolbar.module.scss';
 import { ToolbarInputs } from './toolbarInputs';
 
-export class Toolbar extends BaseComponent{
+export class Toolbar extends BaseComponent {
   public element: HTMLDivElement;
   public controlsBlock: HTMLDivElement;
   public carsBlock: HTMLDivElement;
@@ -34,12 +34,11 @@ export class Toolbar extends BaseComponent{
   }
 
   private renderRaceBlock(): void {
-    this.raceButton = createElementWithProperties('button', ['btn'], { type: 'button' },
-      [{ innerText: 'Race' }]);
-    this.resetButton = createElementWithProperties('button', ['btn'], { type: 'button' },
-      [{ innerText: 'Reset' }]);
-    this.createCarsButton = createElementWithProperties('button', ['btn'], { type: 'button' },
-      [{ innerText: 'Create Cars' }]);
+    this.raceButton = createElementWithProperties('button', ['btn'], { type: 'button' }, [{ innerText: 'Race' }]);
+    this.resetButton = createElementWithProperties('button', ['btn'], { type: 'button' }, [{ innerText: 'Reset' }]);
+    this.createCarsButton = createElementWithProperties('button', ['btn'], { type: 'button' }, [
+      { innerText: 'Create Cars' },
+    ]);
 
     const raceContainer = createElementWithProperties('div', [styles.raceContainer], undefined, undefined, [
       this.raceButton,
@@ -53,8 +52,9 @@ export class Toolbar extends BaseComponent{
     this.createInputName = createElementWithProperties('input', [styles.inputName], ToolbarInputs.createName);
     this.createInputColor = createElementWithProperties('input', [styles.inputColor], ToolbarInputs.createColor);
     this.createError = createElementWithProperties('span', [styles.inputError]);
-    this.createCarButton = createElementWithProperties('button', ['btn', 'btn_centered'], { type: 'button' },
-      [{ innerText: 'Create Car' }]);
+    this.createCarButton = createElementWithProperties('button', ['btn', 'btn_centered'], { type: 'button' }, [
+      { innerText: 'Create Car' },
+    ]);
 
     const createContainer = createElementWithProperties('div', [styles.controlsContainer], undefined, undefined, [
       this.createInputName,
@@ -69,8 +69,9 @@ export class Toolbar extends BaseComponent{
     this.updateInputName = createElementWithProperties('input', [styles.inputName], ToolbarInputs.updateName);
     this.updateInputColor = createElementWithProperties('input', [styles.inputColor], ToolbarInputs.updateColor);
     this.updateError = createElementWithProperties('span', [styles.inputError]);
-    this.updateCarButton = createElementWithProperties('button', ['btn', 'btn_centered'], { type: 'button' },
-      [{ innerText: 'Update Car' }]);
+    this.updateCarButton = createElementWithProperties('button', ['btn', 'btn_centered'], { type: 'button' }, [
+      { innerText: 'Update Car' },
+    ]);
 
     const updateContainer = createElementWithProperties('div', [styles.controlsContainer], undefined, undefined, [
       this.updateInputName,
@@ -82,12 +83,20 @@ export class Toolbar extends BaseComponent{
   }
 
   private renderPagination(): void {
-    this.pgnNext = createElementWithProperties('button', [styles.pgnButton, 'pgn-button_next'], { type: 'button' }, undefined, [
-       createElementWithProperties('span', [styles.pgnIcon]),
-    ]);
-    this.pgnPrevious = createElementWithProperties('button', [styles.pgnButton, 'pgn-button_previous'], { type: 'button' }, undefined, [
-       createElementWithProperties('span', [styles.pgnIcon]),
-    ]);
+    this.pgnNext = createElementWithProperties(
+      'button',
+      [styles.pgnButton, 'pgn-button_next'],
+      { type: 'button' },
+      undefined,
+      [createElementWithProperties('span', [styles.pgnIcon])]
+    );
+    this.pgnPrevious = createElementWithProperties(
+      'button',
+      [styles.pgnButton, 'pgn-button_previous'],
+      { type: 'button' },
+      undefined,
+      [createElementWithProperties('span', [styles.pgnIcon])]
+    );
     this.pgnText = createElementWithProperties('p', [styles.pgnText]);
 
     const pgnContainer = createElementWithProperties('div', [styles.pgnContainer], undefined, undefined, [

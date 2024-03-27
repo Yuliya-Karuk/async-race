@@ -1,7 +1,7 @@
 import { checkDOMElement } from '../../utils/utils';
 import styles from './svgComponent.module.scss';
 
-export class SVGComponent{
+export class SVGComponent {
   private svgNamespace = 'http://www.w3.org/2000/svg';
   private useNamespace = 'http://www.w3.org/1999/xlink';
   private spritePath = './sprite/sprite.svg';
@@ -20,12 +20,11 @@ export class SVGComponent{
     this.svg.append(use);
   }
 
-  public getNode() {
+  public getNode(): SVGElement {
     return this.svg;
   }
 
   public setColor(color: string): void {
     this.svg.style.fill = color;
   }
-
 }

@@ -1,4 +1,4 @@
-import { DomElementAttribute } from "../../types/interfaces";
+import { DomElementAttribute } from '../../types/interfaces';
 
 type Inputs = 'createName' | 'createColor' | 'updateName' | 'updateColor';
 
@@ -11,7 +11,7 @@ export const ToolbarInputs: Record<Inputs, DomElementAttribute> = {
     minlength: '3',
     pattern: '^[A-Z][a-zA-Z0-9 ]+$',
     autocomplete: 'off',
-    placeholder: 'Car name'
+    placeholder: 'Car name',
   },
   createColor: {
     id: 'create-color',
@@ -26,7 +26,7 @@ export const ToolbarInputs: Record<Inputs, DomElementAttribute> = {
     minlength: '3',
     pattern: '^[A-Z][a-zA-Z0-9 ]+$',
     autocomplete: 'off',
-    placeholder: 'Car name'
+    placeholder: 'Car name',
   },
   updateColor: {
     id: 'update-color',

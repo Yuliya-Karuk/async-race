@@ -3,7 +3,7 @@ import { Toolbar } from '../../components/toolbar/toolbar';
 import { createElementWithProperties } from '../../utils/utils';
 import styles from './garage.module.scss';
 
-export class GarageView extends BaseComponent{
+export class GarageView extends BaseComponent {
   public carsBlock: HTMLDivElement;
   public toolbar: Toolbar;
 

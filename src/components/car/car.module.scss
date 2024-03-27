@@ -4,9 +4,9 @@
 }
 
 .car {
-  width: 100%;
   @include flex(center, flex-start, column);
   row-gap: 10px;
+  width: 100%;
 
   .car-btn {
     @extend %transition;
@@ -29,7 +29,7 @@
 }
 
 .car-image {
-  height: 100%;
-  width: fit-content;
   @include flex(flex-start, center);
+  width: fit-content;
+  height: 100%;
 }

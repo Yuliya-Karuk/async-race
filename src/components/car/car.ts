@@ -4,7 +4,7 @@ import { BaseComponent } from '../baseComponent';
 import { SVGComponent } from '../svgComponent/svgComponent';
 import styles from './car.module.scss';
 
-export class Car extends BaseComponent{
+export class Car extends BaseComponent {
   private name: string;
   private color: string;
   private id: number;
@@ -34,10 +34,12 @@ export class Car extends BaseComponent{
   }
 
   private createRaceControls(): void {
-    this.startButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' },
-      [{ innerText: 'Start' }]);
-    this.stopButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' },
-      [{ innerText: 'Stop' }]);
+    this.startButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' }, [
+      { innerText: 'Start' },
+    ]);
+    this.stopButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' }, [
+      { innerText: 'Stop' },
+    ]);
     const raceControlsContainer = createElementWithProperties('div', [styles.raceControls], undefined, undefined, [
       this.startButton,
       this.stopButton,
@@ -48,10 +50,12 @@ export class Car extends BaseComponent{
 
   private createCarControls(): void {
     this.carName = createElementWithProperties('h3', [styles.carName], undefined, [{ innerText: this.name }]);
-    this.changeButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' },
-      [{ innerText: 'Change' }]);
-    this.deleteButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' },
-      [{ innerText: 'Delete' }]);
+    this.changeButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' }, [
+      { innerText: 'Change' },
+    ]);
+    this.deleteButton = createElementWithProperties('button', ['btn', styles.carBtn], { type: 'button' }, [
+      { innerText: 'Delete' },
+    ]);
     const carControlsContainer = createElementWithProperties('div', [styles.carControls], undefined, undefined, [
       this.carName,
       this.changeButton,
@@ -65,8 +69,7 @@ export class Car extends BaseComponent{
     this.carImage = createElementWithProperties('div', [styles.carImage], undefined, undefined, [
       this.carSvg.getNode(),
     ]);
-    const carTrack = createElementWithProperties('div', [styles.carTrack], undefined, undefined,
-      [this.carImage]);
+    const carTrack = createElementWithProperties('div', [styles.carTrack], undefined, undefined, [this.carImage]);
     this.node.append(carTrack);
   }
 
@@ -75,7 +78,7 @@ export class Car extends BaseComponent{
   }
 
   public setRaceButtons(isMoved: boolean): void {
-    if(isMoved) {
+    if (isMoved) {
       this.startButton.setAttribute('disabled', 'disabled');
       this.stopButton.removeAttribute('disabled');
     } else {
@@ -84,4 +87,3 @@ export class Car extends BaseComponent{
     }
   }
 }
-
