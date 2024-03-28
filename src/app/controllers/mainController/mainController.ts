@@ -23,15 +23,17 @@ export class MainController {
         }
 
         this.page = this.pages.winners;
+        this.page.loadPage();
+        this.main.setContent(this.page.view.getNode());
         break;
       default:
         if (!this.pages.garage) {
           const { Garage } = await import('../../../pages/garage/garage');
           this.pages.garage = new Garage();
         }
-        // this.viewName = RaceViews.garage;
+
         this.page = this.pages.garage;
-        this.page.loadPage(1);
+        this.page.loadPage();
         this.main.setContent(this.page.view.getNode());
     }
   }

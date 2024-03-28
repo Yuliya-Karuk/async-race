@@ -1,0 +1,24 @@
+
+.winner {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 5% 10% 40% 20% 25%;
+  @include font(2.6rem, 900, 1.05);
+  color: var(--color-font-light);
+
+  &_head {
+    font-size: 3rem;
+    color: var(--color-primary-bright);
+  }
+}
+
+.winner-wins,
+.winner-time,
+.winner-image,
+.winner-id {
+  @include flex(center, center);
+}
+
+.winner-name {
+  @include flex(flex-start, center);
+}

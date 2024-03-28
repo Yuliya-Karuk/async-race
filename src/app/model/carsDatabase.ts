@@ -59,7 +59,7 @@ export class CarsDatabase {
     }
   }
 
-  public async updateCar(carId: number, carNewData: Partial<TCar>): Promise<TCar> {
+  public async updateCar(carId: number, carNewData: Omit<TCar, 'id'>): Promise<TCar> {
     const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
 
     try {

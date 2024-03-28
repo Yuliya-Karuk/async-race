@@ -5,6 +5,8 @@ export type QueryParams = {
   _limit?: string;
   status?: string;
   id?: string;
+  _sort?: string;
+  _order?: string;
 };
 
 export type TCar = {
@@ -18,7 +20,13 @@ export type TEngine = {
   distance: number;
 };
 
-export type CarsPageParams = {
-  pageNumber?: number;
-  carsPerPage?: number;
+// export type CarsPageParams = {
+//   pageNumber?: number;
+//   carsPerPage?: number;
+// };
+
+export type TWinner = {
+  id: number;
+  wins: number;
+  time: number;
 };

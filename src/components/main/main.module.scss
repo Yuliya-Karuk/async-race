@@ -1,5 +1,5 @@
 .main {
-  @include flex(flex, flex-start);
+  @include flex(center, flex-start);
   height: calc(100% - 110px);
   min-height: calc(100vh - 110px);
 }
