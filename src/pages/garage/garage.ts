@@ -19,6 +19,7 @@ export class Garage {
   private renderStaticParts(): void {
     this.view.createToolbar();
     this.view.createCarsContainer();
+    this.view.createModal();
     this.bindToolbarListeners();
   }
 
@@ -61,6 +62,8 @@ export class Garage {
 
     this.view.toolbar.raceButton.addEventListener('click', () => this.startCommonRace());
     this.view.toolbar.resetButton.addEventListener('click', () => this.resetCommonRace());
+
+    document.addEventListener('click', (e: Event) => this.handleClickOutsideModal(e));
   }
 
   private async handleCreateCar(input: HTMLInputElement): Promise<void> {
@@ -161,10 +164,19 @@ export class Garage {
     this.view.toolbar.setStartButtonsState();
   }
 
-  private handleFinishRace(winnerData: FirstFinisher): void {
+  private async handleFinishRace(winnerData: FirstFinisher): Promise<void> {
     this.view.toolbar.setFinishButtonsState();
 
     const raceTime = (Date.now() - winnerData.startTime) / 1000;
+    const winnerCar = await CarsApi.getCar(winnerData.id);
     console.log(raceTime, winnerData.id);
+    this.view.modal.setWinner(winnerCar.name, raceTime);
+    this.view.modal.showModal();
+  }
+
+  private handleClickOutsideModal(e: Event): void {
+    if (e.target === this.view.modal.getNode()) {
+      this.view.modal.hideModal();
+    }
   }
 }

@@ -8,4 +8,5 @@
 *.png
 *.ico
 *.jpg
+*.jpeg
 /node_modules

@@ -28,6 +28,18 @@ export class CarsDatabase {
     }
   }
 
+  public async getCar(carId: number): Promise<TCar> {
+    const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
+
+    try {
+      const response = await fetch(url);
+      const car: TCar = await response.json();
+      return car;
+    } catch {
+      throw Error('Error');
+    }
+  }
+
   public async createCar(carData: Omit<TCar, 'id'>): Promise<TCar> {
     const url = buildURL([this.baseUrl, this.garageEndpoint]);
 
