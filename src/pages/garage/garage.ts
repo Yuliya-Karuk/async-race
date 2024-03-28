@@ -2,7 +2,7 @@ import { CarController } from '../../app/controllers/carController/carController
 import { CarsApi } from '../../app/model/carsDatabase';
 import { WinnersApi } from '../../app/model/winnersAPI';
 import { FirstFinisher } from '../../types/interfaces';
-import { TCar } from '../../types/types';
+import { TCar, TWinner } from '../../types/types';
 import { getRandomColor, getRandomName, isNotNullable } from '../../utils/utils';
 import { validationFunctions } from '../../utils/validityFunctions';
 import { GarageView } from './garageView';
@@ -119,6 +119,12 @@ export class Garage {
 
   private async handleDeleteCar(car: CarController): Promise<void> {
     await CarsApi.deleteCar(car.id);
+
+    const carInWinners = await this.checkCarIsWinner(car.id);
+    if (carInWinners) {
+      await WinnersApi.deleteWinner(car.id);
+    }
+
     this.loadPage();
   }
 
@@ -142,7 +148,11 @@ export class Garage {
     const preparePromises = cars.map(car => car.prepareEngine());
     await Promise.all(preparePromises);
 
-    const startPromises = cars.map(car => car.startAnimation());
+    const startPromises = cars.map(car => {
+      car.view.setRaceButtons(true);
+      return car.startAnimation();
+    });
+
     const winnerData = await Promise.any(startPromises);
     this.handleFinishRace(winnerData);
   }
@@ -185,7 +195,7 @@ export class Garage {
   }
 
   private async sendWinnerToServer(winnerCar: TCar, raceTime: number): Promise<void> {
-    const isAlreadyWinner = await WinnersApi.getWinner(winnerCar.id);
+    const isAlreadyWinner = await this.checkCarIsWinner(winnerCar.id);
     if (isAlreadyWinner) {
       const newWinnerData = {
         time: raceTime < isAlreadyWinner.time ? raceTime : isAlreadyWinner.time,
@@ -200,6 +210,11 @@ export class Garage {
         time: raceTime,
       });
     }
+  }
+
+  private async checkCarIsWinner(id: number): Promise<TWinner | null> {
+    const carInWinners = await WinnersApi.getWinner(id);
+    return carInWinners;
   }
 
   private handlePagination(direction: number): void {

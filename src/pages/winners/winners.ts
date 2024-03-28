@@ -29,7 +29,6 @@ export class Winners {
 
   public async loadPage(): Promise<void> {
     const winners = await WinnersApi.getWinners(this.pageNumber);
-    console.log(winners);
 
     this.view.setPagination(this.pageNumber, WinnersApi.winnersTotal);
 

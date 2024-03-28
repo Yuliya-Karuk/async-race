@@ -69,6 +69,18 @@ export class WinnersDatabase {
     const createdCar: TWinner = await response.json();
     return createdCar;
   }
+
+  public async deleteWinner(carId: number): Promise<Response> {
+    const url = buildURL([this.baseUrl, this.winnersEndpoint, String(carId)]);
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+      });
+      return response;
+    } catch (error) {
+      throw Error('Error');
+    }
+  }
 }
 
 export const WinnersApi = new WinnersDatabase();
