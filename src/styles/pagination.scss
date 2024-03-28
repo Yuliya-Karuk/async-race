@@ -1,0 +1,59 @@
+.pgn-container {
+  @include flex(center, center);
+  gap: 3%;
+  width: 100%;
+}
+
+.pgn-button {
+  @include flex(center, center);
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border-radius: 10px;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  @include media-laptop {
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.pgn-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: center no-repeat url('../img/next.svg');
+  background-size: contain;
+
+  .pgn-button_previous & {
+    transform: rotate(180deg);
+  }
+
+  @include media-laptop {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.pgn-text {
+  @include font(2.4rem, 700, normal, 0.05rem);
+  color: var(--color-font-light);
+
+  @include media-laptop {
+    font-size: 1.6rem;
+  }
+}
+
+.pgn-total {
+  @include font(2.4rem, 700, normal, 0.05rem);
+  color: var(--color-primary-bright);
+  text-transform: uppercase;
+
+  @include media-laptop {
+    font-size: 1.6rem;
+  }
+}

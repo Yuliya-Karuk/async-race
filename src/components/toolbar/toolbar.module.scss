@@ -60,6 +60,12 @@
     border: 1px solid var(--color-primary-bright);
     box-shadow: none;
   }
+
+  @include media-tablet {
+    font-size: 1.4rem;
+    height: 30px;
+    padding: 5px;
+  }
 }
 
 .input-error {
@@ -73,45 +79,8 @@
   width: 25%;
   height: 40px;
   border: 1px solid var(--color-background);
-}
 
-.pgn-container {
-  @include flex(center, center);
-  gap: 3%;
-  width: 100%;
-}
-
-.pgn-button {
-  @include flex(center, center);
-  width: 50px;
-  height: 50px;
-  padding: 0;
-  border-radius: 10px;
-
-  &:disabled {
-    opacity: 0.5;
+  @include media-tablet {
+    height: 30px;
   }
-}
-
-.pgn-icon {
-  display: block;
-  width: 40px;
-  height: 40px;
-  background: center no-repeat url('../../img/next.svg');
-  background-size: contain;
-
-  .pgn-button_previous & {
-    transform: rotate(180deg);
-  }
-}
-
-.pgn-text {
-  @include font(2.4rem, 700, normal, 0.05rem);
-  color: var(--color-font-light);
-}
-
-.pgn-total {
-  @include font(2.4rem, 700, normal, 0.05rem);
-  color: var(--color-primary-bright);
-  text-transform: uppercase;
 }

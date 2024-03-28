@@ -83,27 +83,27 @@ export class Toolbar extends BaseComponent {
     this.appendChildren([updateContainer]);
   }
 
-  private renderPagination(): void {
+  public renderPagination(): void {
     this.pgnNext = createElementWithProperties(
       'button',
-      ['btn', styles.pgnButton, 'pgn-button_next'],
+      ['btn', 'pgn-button', 'pgn-button_next'],
       { type: 'button' },
       undefined,
-      [createElementWithProperties('span', [styles.pgnIcon])]
+      [createElementWithProperties('span', ['pgn-icon'])]
     );
 
     this.pgnPrevious = createElementWithProperties(
       'button',
-      ['btn', styles.pgnButton, 'pgn-button_previous'],
+      ['btn', 'pgn-button', 'pgn-button_previous'],
       { type: 'button' },
       undefined,
-      [createElementWithProperties('span', [styles.pgnIcon])]
+      [createElementWithProperties('span', ['pgn-icon'])]
     );
 
-    this.pgnText = createElementWithProperties('p', [styles.pgnText]);
-    this.total = createElementWithProperties('h4', [styles.pgnTotal]);
+    this.pgnText = createElementWithProperties('p', ['pgn-text']);
+    this.total = createElementWithProperties('h4', ['pgn-total']);
 
-    const pgnContainer = createElementWithProperties('div', [styles.pgnContainer], undefined, undefined, [
+    const pgnContainer = createElementWithProperties('div', ['pgn-container'], undefined, undefined, [
       this.pgnPrevious,
       this.pgnText,
       this.pgnNext,
@@ -150,7 +150,8 @@ export class Toolbar extends BaseComponent {
 
     if (currentPage === 1) {
       this.pgnPrevious.setAttribute('disabled', 'disabled');
-    } else if (currentPage === pagesCount) {
+    }
+    if (currentPage === pagesCount) {
       this.pgnNext.setAttribute('disabled', 'disabled');
     }
   }

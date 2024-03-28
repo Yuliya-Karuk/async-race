@@ -36,4 +36,9 @@
     flex-wrap: wrap;
     margin: 0 auto;
   }
+
+  @include media-tablet {
+    font-size: 1.4rem;
+    padding: 5px 10px;
+  }
 }

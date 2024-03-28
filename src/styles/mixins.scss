@@ -1,4 +1,5 @@
 $laptop: 1024px;
+$tablet: 768px;
 
 @mixin font($font-size, $font-weight, $line-height, $letter-spacing: normal, $text-transform: none) {
   font-size: $font-size;
@@ -16,6 +17,12 @@ $laptop: 1024px;
 
 @mixin media-laptop {
   @media (max-width: $laptop), (height <= 600px) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media (max-width: $tablet), (height <=600px) {
     @content;
   }
 }
