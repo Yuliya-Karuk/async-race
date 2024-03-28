@@ -3,6 +3,16 @@
   flex-wrap: wrap;
   row-gap: 20px;
   width: 100%;
+
+  &_disabled > * {
+    pointer-events: none;
+  }
+
+  &_disabled {
+    .btn {
+      opacity: 0.5;
+    }
+  }
 }
 
 .controls-container {

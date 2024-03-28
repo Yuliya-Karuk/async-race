@@ -32,14 +32,17 @@ export class Garage {
     this.renderCars(carsPage);
   }
 
-  public renderCars(cars: TCar[]): void {
+  public renderCars(carsData: TCar[]): Promise<CarController[]> {
     this.view.cleanCarsContainer();
 
-    cars.forEach(oneCar => {
+    const cars = carsData.map(oneCar => {
       const car = new CarController(oneCar);
       this.bindCarListeners(car);
       this.view.carsBlock.append(car.view.getNode());
+      return car;
     });
+
+    return Promise.resolve(cars);
   }
 
   private bindToolbarListeners(): void {
@@ -57,6 +60,7 @@ export class Garage {
     this.view.toolbar.pgnPrevious.addEventListener('click', () => this.loadPage(this.pageNumber - 1));
 
     this.view.toolbar.raceButton.addEventListener('click', () => this.startCommonRace());
+    this.view.toolbar.resetButton.addEventListener('click', () => this.resetCommonRace());
   }
 
   private async handleCreateCar(input: HTMLInputElement): Promise<void> {
@@ -128,29 +132,38 @@ export class Garage {
   }
 
   private async startCommonRace(): Promise<void> {
-    this.view.toolbar.disableAllButtons();
-    const cars = await CarsApi.getCars(this.pageNumber);
+    const cars = await this.stopAllCars();
 
-    this.view.cleanCarsContainer();
-
-    const carsControllers = cars.map(oneCar => {
-      const car = new CarController(oneCar);
-      this.bindCarListeners(car);
-      car.view.disableRaceButton();
-      this.view.carsBlock.append(car.view.getNode());
-      return car;
-    });
-
-    const stopPromises = carsControllers.map(car => car.stopRaceCar(true));
-    await Promise.all(stopPromises);
-    const preparePromises = carsControllers.map(car => car.prepareEngine());
+    const preparePromises = cars.map(car => car.prepareEngine());
     await Promise.all(preparePromises);
-    const startPromises = carsControllers.map(car => car.startAnimation());
+
+    const startPromises = cars.map(car => car.startAnimation());
     const winnerData = await Promise.any(startPromises);
     this.handleFinishRace(winnerData);
   }
 
+  private async stopAllCars(): Promise<CarController[]> {
+    this.view.toolbar.disableAllButtons();
+
+    const carsData = await CarsApi.getCars(this.pageNumber);
+
+    const cars = await this.renderCars(carsData);
+    cars.forEach(car => car.view.disableRaceButton());
+
+    const stopPromises = cars.map(car => car.stopRaceCar(true));
+    await Promise.all(stopPromises);
+
+    return cars;
+  }
+
+  private async resetCommonRace(): Promise<void> {
+    await this.stopAllCars();
+    this.view.toolbar.setStartButtonsState();
+  }
+
   private handleFinishRace(winnerData: FirstFinisher): void {
+    this.view.toolbar.setFinishButtonsState();
+
     const raceTime = (Date.now() - winnerData.startTime) / 1000;
     console.log(raceTime, winnerData.id);
   }

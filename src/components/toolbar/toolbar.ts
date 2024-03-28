@@ -113,12 +113,20 @@ export class Toolbar extends BaseComponent {
   }
 
   public setStartButtonsState(): void {
+    this.node.classList.remove('toolbar_disabled');
+    this.raceButton.removeAttribute('disabled');
     this.resetButton.setAttribute('disabled', 'disabled');
     this.updateCarButton.setAttribute('disabled', 'disabled');
   }
 
   public enableUpdateButton(): void {
     this.updateCarButton.removeAttribute('disabled');
+  }
+
+  public setFinishButtonsState(): void {
+    this.node.classList.remove('toolbar_disabled');
+    this.resetButton.removeAttribute('disabled');
+    this.raceButton.setAttribute('disabled', 'disabled');
   }
 
   public resetCreateInputs(): void {
@@ -148,12 +156,6 @@ export class Toolbar extends BaseComponent {
   }
 
   public disableAllButtons(): void {
-    this.pgnNext.setAttribute('disabled', 'disabled');
-    this.pgnPrevious.setAttribute('disabled', 'disabled');
-    this.raceButton.setAttribute('disabled', 'disabled');
-    this.resetButton.setAttribute('disabled', 'disabled');
-    this.createCarButton.setAttribute('disabled', 'disabled');
-    this.createCarsButton.setAttribute('disabled', 'disabled');
-    this.updateCarButton.setAttribute('disabled', 'disabled');
+    this.node.classList.add('toolbar_disabled');
   }
 }
