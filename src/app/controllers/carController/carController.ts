@@ -56,8 +56,6 @@ export class CarController {
 
       if (this.currentPoint < this.raceLength && this.isEngineWork) {
         requestAnimationFrame(animate);
-      } else if (this.currentPoint >= this.raceLength && this.isEngineWork) {
-        this.isFinished = true;
       }
     };
 
@@ -66,7 +64,8 @@ export class CarController {
 
     this.isEngineWork = await CarsApi.driveCar(this.id);
 
-    if (this.isEngineWork === false && this.isFinished === false) {
+    if (this.isEngineWork === false) {
+      this.view.setCarBroken();
       return Promise.reject();
     }
 
@@ -78,7 +77,10 @@ export class CarController {
 
     this.isEngineWork = false;
     this.currentPoint = 0;
+
     this.view.moveCarImage(this.currentPoint);
+    this.view.setCarReady();
+
     if (!isCommon) {
       this.view.setRaceButtons(false);
     }

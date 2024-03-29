@@ -102,4 +102,12 @@ export class Car extends BaseComponent {
     this.startButton.setAttribute('disabled', 'disabled');
     this.stopButton.setAttribute('disabled', 'disabled');
   }
+
+  public setCarBroken(): void {
+    this.node.classList.add('car_broken');
+  }
+
+  public setCarReady(): void {
+    this.node.classList.remove('car_broken');
+  }
 }

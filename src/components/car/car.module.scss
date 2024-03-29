@@ -51,6 +51,24 @@
   @include flex(flex-start, center);
   width: fit-content;
   height: 100%;
+
+  &::after {
+    content: "";
+    display: none;
+    position: absolute;
+    right: 40%;
+    top: 0;
+    height: 30px;
+    width: 30px;
+    background: center no-repeat url('../../img/fire.gif');
+    background-size: cover;
+  }
+
+  .car_broken & {
+    &::after {
+      display: block;
+    }
+  }
 }
 
 .car-name {
