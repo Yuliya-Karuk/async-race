@@ -48,9 +48,10 @@ export class Winners {
   private async renderWinners(winners: TWinner[]): Promise<void> {
     this.view.cleanWinnersContainer();
 
-    winners.forEach(async winnerData => {
+    winners.forEach(async (winnerData, i) => {
+      const index = (this.pageNumber - 1) * 10 + i + 1;
       const carData = await CarsApi.getCar(winnerData.id);
-      const winner = new Winner(winnerData, carData);
+      const winner = new Winner(winnerData, carData, index);
       this.view.winnersBlock.append(winner.getNode());
     });
   }

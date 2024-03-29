@@ -4,7 +4,7 @@ import { createElementWithProperties } from '../../utils/utils';
 import styles from './winners.module.scss';
 
 const tableColumns = {
-  1: 'ID',
+  1: '№',
   2: 'Car',
   3: 'Name',
   4: 'Winnings',

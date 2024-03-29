@@ -8,22 +8,24 @@ export class Winner extends BaseComponent {
   private name: string;
   private color: string;
   private time: number;
+  private index: number;
   private id: number;
   private wins: number;
 
-  constructor(winner: TWinner, car: TCar) {
+  constructor(winner: TWinner, car: TCar, index: number) {
     super('div', ['winners-row']);
     this.name = car.name;
     this.color = car.color;
     this.wins = winner.wins;
     this.time = winner.time;
     this.id = winner.id;
+    this.index = index;
 
     this.createContent();
   }
 
   private createContent(): void {
-    const rowId = createElementWithProperties('div', [styles.winnerId], undefined, [{ innerText: `${this.id}` }]);
+    const rowId = createElementWithProperties('div', [styles.winnerId], undefined, [{ innerText: `${this.index}` }]);
 
     const carSvg = new SVGComponent(this.color, this.id);
     const rowImage = createElementWithProperties('div', [styles.winnerImage], undefined, undefined, [carSvg.getNode()]);
