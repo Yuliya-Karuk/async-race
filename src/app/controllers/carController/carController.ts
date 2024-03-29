@@ -14,7 +14,6 @@ export class CarController {
   private carSpeed: number;
   private currentPoint: number = 0;
   private isEngineWork: boolean;
-  private isFinished: boolean;
 
   constructor(car: TCar) {
     this.id = car.id;
@@ -45,7 +44,6 @@ export class CarController {
 
     this.currentPoint = 0;
     this.isEngineWork = true;
-    this.isFinished = false;
   }
 
   public async startAnimation(): Promise<FirstFinisher | never> {

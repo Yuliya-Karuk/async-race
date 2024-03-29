@@ -112,11 +112,15 @@ export class Toolbar extends BaseComponent {
     this.appendChildren([pgnContainer]);
   }
 
-  public setStartButtonsState(): void {
+  public setStartButtonsState(isChosenCar: boolean): void {
     this.node.classList.remove('toolbar_disabled');
     this.raceButton.removeAttribute('disabled');
     this.resetButton.setAttribute('disabled', 'disabled');
-    this.updateCarButton.setAttribute('disabled', 'disabled');
+    if (isChosenCar) {
+      this.updateCarButton.removeAttribute('disabled');
+    } else {
+      this.updateCarButton.setAttribute('disabled', 'disabled');
+    }
   }
 
   public enableUpdateButton(): void {

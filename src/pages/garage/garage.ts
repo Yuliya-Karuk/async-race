@@ -9,7 +9,7 @@ import { GarageView } from './garageView';
 
 export class Garage {
   public view: GarageView;
-  private chosenCar: CarController;
+  private chosenCar: CarController | null;
   private pageNumber: number;
 
   constructor() {
@@ -29,10 +29,10 @@ export class Garage {
   public async loadPage(): Promise<void> {
     const carsPage = await CarsApi.getCars(this.pageNumber);
 
-    this.view.toolbar.setPagination(this.pageNumber, CarsApi.carsTotal);
-    this.view.toolbar.setStartButtonsState();
-
     this.renderCars(carsPage);
+
+    this.view.toolbar.setPagination(this.pageNumber, CarsApi.carsTotal);
+    this.view.toolbar.setStartButtonsState(Boolean(this.chosenCar));
   }
 
   public renderCars(carsData: TCar[]): Promise<CarController[]> {
@@ -40,6 +40,11 @@ export class Garage {
 
     const cars = carsData.map(oneCar => {
       const car = new CarController(oneCar);
+
+      if (this.chosenCar && this.chosenCar.id === car.id) {
+        this.chosenCar = car;
+      }
+
       this.bindCarListeners(car);
       this.view.carsBlock.append(car.view.getNode());
       return car;
@@ -88,9 +93,10 @@ export class Garage {
         color: this.view.toolbar.updateInputColor.value,
       };
 
-      await CarsApi.updateCar(this.chosenCar.id, carNewData);
+      await CarsApi.updateCar(isNotNullable(this.chosenCar).id, carNewData);
       this.loadPage();
       this.view.toolbar.resetUpdateInputs();
+      this.chosenCar = null;
     }
   }
 
@@ -173,7 +179,7 @@ export class Garage {
 
   private async resetCommonRace(): Promise<void> {
     await this.stopAllCars();
-    this.view.toolbar.setStartButtonsState();
+    this.view.toolbar.setStartButtonsState(Boolean(this.chosenCar));
   }
 
   private async handleFinishRace(winnerData: FirstFinisher): Promise<void> {
