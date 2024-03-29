@@ -11,26 +11,93 @@
 .winners-row {
   width: 90%;
   display: grid;
-  grid-template-columns: 5% 15% 40% 18% 22%;
+  column-gap: 1%;
+  grid-template-columns: 5% 14% 38% 17% 22%;
   @include font(2.6rem, 900, 1.05);
   color: var(--color-font-light);
 
   &_head {
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: var(--color-primary-bright);
   }
 
   @include media-laptop {
     font-size: 1.6rem;
+        line-height: 1.5;
+  }
+
+  @include media-tablet {
+    font-size: 1.2rem;
   }
 }
 
 .winners-column {
   @include flex(center, center);
+  column-gap: 15px;
+
+  &_sorted_asc,
+  &_sorted_desc {
+    color: var(--color-font-invalid);
+  }
+
+  .winners-row_head & {
+    background: var(--color-button);
+    border-radius: 10px;
+  }
+
+  @include media-hover {
+    &:hover {
+      filter: drop-shadow(2px 3px 3px var(--color-hover));
+    }
+  }
+
+  @include media-tablet {
+    border-radius: 5px;
+    column-gap: 5px;
+  }
+}
+
+.winners-column {
+  &:nth-of-type(1),
+  &:nth-of-type(2),
+  &:nth-of-type(3) {
+    pointer-events: none;
+  }
 }
 
 .winners-content {
   width: 100%;
   @include flex(flex-start, center, column);
   row-gap: 20px;
+}
+
+.order-icon {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  background: center no-repeat url('../../img/arrow-up.svg');
+  background-size: contain;
+
+  .winners-column_sorted_asc & {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .winners-column_sorted_desc & {
+    visibility: visible;
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+
+  @include media-laptop {
+    width: 15px;
+    height: 15px;
+  }
+
+  @include media-tablet {
+    width: 10px;
+    height: 10px;
+  }
 }

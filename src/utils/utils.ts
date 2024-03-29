@@ -1,5 +1,6 @@
 import { CarNames } from '../data/carNames';
 import { Routes } from '../router/router.types';
+import { Order, SortBy } from '../types/enums';
 import { DomElementAttribute, DomElementProperties } from '../types/interfaces';
 
 export function isNotNullable<T>(value: T): NonNullable<T> {
@@ -96,4 +97,22 @@ export function findTrackLength(): number {
   const pageWidth = window.innerWidth > 1400 ? 1400 : window.innerWidth;
   const trackLength = pageWidth - 2 * 20 - 2 * 10 - 80 - 40; // есть баг с полосой прокрутки
   return trackLength;
+}
+
+export function switchOrder(currentOrder: Order): Order {
+  switch (currentOrder) {
+    case Order.ASC:
+      return Order.DESC;
+    default:
+      return Order.ASC;
+  }
+}
+
+export function switchSort(currentSort: SortBy): SortBy {
+  switch (currentSort) {
+    case SortBy.time:
+      return SortBy.wins;
+    default:
+      return SortBy.time;
+  }
 }

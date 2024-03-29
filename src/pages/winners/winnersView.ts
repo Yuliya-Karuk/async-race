@@ -1,4 +1,5 @@
 import { BaseComponent } from '../../components/baseComponent';
+import { Order, SortBy } from '../../types/enums';
 import { createElementWithProperties } from '../../utils/utils';
 import styles from './winners.module.scss';
 
@@ -12,6 +13,12 @@ const tableColumns = {
 
 export class WinnersView extends BaseComponent {
   public winnersBlock: HTMLDivElement;
+
+  public timeHead: HTMLDivElement;
+  public winsHead: HTMLDivElement;
+  public winsOrderIcon: HTMLSpanElement;
+  public timeOrderIcon: HTMLSpanElement;
+
   public pgnNext: HTMLButtonElement;
   public pgnText: HTMLParagraphElement;
   public pgnPrevious: HTMLButtonElement;
@@ -25,8 +32,30 @@ export class WinnersView extends BaseComponent {
     const tableHead = createElementWithProperties('div', [styles.winnersRow, 'winners-row_head']);
 
     Object.values(tableColumns).forEach(col => {
-      const column = createElementWithProperties('div', [styles.winnersColumn], undefined, [{ innerText: col }]);
-      tableHead.append(column);
+      if (col === tableColumns[4]) {
+        this.winsOrderIcon = createElementWithProperties('span', [styles.orderIcon]);
+        this.winsHead = createElementWithProperties(
+          'div',
+          [styles.winnersColumn],
+          undefined,
+          [{ innerText: col }],
+          [this.winsOrderIcon]
+        );
+        tableHead.append(this.winsHead);
+      } else if (col === tableColumns[5]) {
+        this.timeOrderIcon = createElementWithProperties('span', [styles.orderIcon]);
+        this.timeHead = createElementWithProperties(
+          'div',
+          [styles.winnersColumn, 'winners-column_sorted_asc'],
+          undefined,
+          [{ innerText: col }],
+          [this.timeOrderIcon]
+        );
+        tableHead.append(this.timeHead);
+      } else {
+        const column = createElementWithProperties('div', [styles.winnersColumn], undefined, [{ innerText: col }]);
+        tableHead.append(column);
+      }
     });
 
     this.appendChildren([tableHead]);
@@ -86,5 +115,15 @@ export class WinnersView extends BaseComponent {
 
   public cleanWinnersContainer(): void {
     this.winnersBlock.replaceChildren();
+  }
+
+  public setSortingColumns(sortBy: SortBy, order: Order): void {
+    this.winsHead.className = styles.winnersColumn;
+    this.timeHead.className = styles.winnersColumn;
+    if (sortBy === SortBy.time) {
+      this.timeHead.classList.add(`winners-column_sorted_${order.toLowerCase()}`);
+    } else {
+      this.winsHead.classList.add(`winners-column_sorted_${order.toLowerCase()}`);
+    }
   }
 }

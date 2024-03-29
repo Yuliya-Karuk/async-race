@@ -1,12 +1,16 @@
 import { CarsApi } from '../../app/model/carsDatabase';
 import { WinnersApi } from '../../app/model/winnersAPI';
 import { Winner } from '../../components/winner/winner';
+import { Order, SortBy } from '../../types/enums';
 import { TWinner } from '../../types/types';
+import { switchOrder, switchSort } from '../../utils/utils';
 import { WinnersView } from './winnersView';
 
 export class Winners {
   public view: WinnersView;
   private pageNumber: number;
+  private sortBy: SortBy = SortBy.time;
+  private order: Order = Order.ASC;
 
   constructor() {
     this.view = new WinnersView();
@@ -20,6 +24,7 @@ export class Winners {
     this.view.createWinnersContainer();
     this.view.renderPagination();
     this.bindPaginationListeners();
+    this.bindSortingListeners();
   }
 
   private bindPaginationListeners(): void {
@@ -27,8 +32,13 @@ export class Winners {
     this.view.pgnPrevious.addEventListener('click', () => this.handlePagination(-1));
   }
 
+  private bindSortingListeners(): void {
+    this.view.winsHead.addEventListener('click', () => this.handleSorting(SortBy.wins));
+    this.view.timeHead.addEventListener('click', () => this.handleSorting(SortBy.time));
+  }
+
   public async loadPage(): Promise<void> {
-    const winners = await WinnersApi.getWinners(this.pageNumber);
+    const winners = await WinnersApi.getWinners(this.pageNumber, this.sortBy, this.order);
 
     this.view.setPagination(this.pageNumber, WinnersApi.winnersTotal);
 
@@ -48,5 +58,23 @@ export class Winners {
   private handlePagination(direction: number): void {
     this.pageNumber += direction;
     this.loadPage();
+  }
+
+  private async handleSorting(chosenSort: SortBy): Promise<void> {
+    if (
+      (this.sortBy === SortBy.wins && chosenSort === SortBy.wins) ||
+      (this.sortBy === SortBy.time && chosenSort === SortBy.time)
+    ) {
+      this.order = switchOrder(this.order);
+    } else if (
+      (this.sortBy === SortBy.time && chosenSort === SortBy.wins) ||
+      (this.sortBy === SortBy.wins && chosenSort === SortBy.time)
+    ) {
+      this.sortBy = switchSort(this.sortBy);
+      this.order = Order.ASC;
+    }
+
+    this.view.setSortingColumns(this.sortBy, this.order);
+    await this.loadPage();
   }
 }
