@@ -23,7 +23,7 @@ export class HeaderController {
 
   private handleClick(e: Event): void {
     e.preventDefault();
-    const location = checkEventTarget(e.target).getAttribute('href') || '/';
+    const location = checkEventTarget(e.target).getAttribute('href') || '';
     this.router.navigateTo(location);
 
     this.page = CheckRoute(location);

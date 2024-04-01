@@ -71,10 +71,13 @@ export function checkTouch(value: Touch | null): HTMLElement {
 }
 
 export function CheckRoute(route: string): Routes {
-  if (route === Routes.Garage || route === Routes.Winners) {
-    return route as Routes.Garage;
+  if (Routes.Garage.includes(route)) {
+    return Routes.Garage;
   }
-  throw new Error(`404 Not Found`);
+  if (Routes.Winners.includes(route)) {
+    return Routes.Winners;
+  }
+  return Routes.Garage;
 }
 
 function getRandomNumber(min: number, max: number): number {

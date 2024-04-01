@@ -8,7 +8,7 @@ export class Router {
 
   constructor(setPageContent: Callback<string>) {
     this.setPage = setPageContent;
-    window.onpopstate = (): void => {
+    window.onhashchange = (): void => {
       this.handleLocation();
     };
     window.onload = (): void => {
@@ -17,9 +17,9 @@ export class Router {
   }
 
   public handleLocation(): void {
-    console.log(window.location.pathname);
-    this.currentPage = CheckRoute(window.location.pathname);
-    console.log(this.currentPage);
+    const route = window.location.hash;
+    this.currentPage = CheckRoute(route);
+
     this.setPage(this.currentPage);
   }
 
