@@ -1,9 +1,8 @@
-
 .winner {
-  width: 90%;
+  @include font(2.6rem, 900, 1.05);
   display: grid;
   grid-template-columns: 5% 10% 40% 20% 25%;
-  @include font(2.6rem, 900, 1.05);
+  width: 90%;
   color: var(--color-font-light);
 
   &_head {

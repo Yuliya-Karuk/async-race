@@ -12,6 +12,11 @@
         2px 4px 8px 0 var(--color-hover);
     }
   }
+
+  @include media-tablet {
+    padding: 5px 10px;
+    font-size: 1.4rem;
+  }
   padding: 10px 20px;
   color: var(--color-font-light);
   background-color: var(--color-button);
@@ -35,10 +40,5 @@
     @include flex(center, center);
     flex-wrap: wrap;
     margin: 0 auto;
-  }
-
-  @include media-tablet {
-    font-size: 1.4rem;
-    padding: 5px 10px;
   }
 }

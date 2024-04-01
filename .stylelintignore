@@ -9,4 +9,5 @@
 *.ico
 *.jpg
 *.jpeg
+*.gif
 /node_modules

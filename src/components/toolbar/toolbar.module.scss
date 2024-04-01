@@ -47,6 +47,12 @@
       box-shadow: 0 0 4px 2px var(--color-hover);
     }
   }
+
+  @include media-tablet {
+    height: 30px;
+    padding: 5px;
+    font-size: 1.4rem;
+  }
   width: 70%;
   height: 40px;
   padding: 10px;
@@ -60,12 +66,6 @@
     border: 1px solid var(--color-primary-bright);
     box-shadow: none;
   }
-
-  @include media-tablet {
-    font-size: 1.4rem;
-    height: 30px;
-    padding: 5px;
-  }
 }
 
 .input-error {
@@ -76,11 +76,11 @@
 }
 
 .input-color {
-  width: 25%;
-  height: 40px;
-  border: 1px solid var(--color-background);
 
   @include media-tablet {
     height: 30px;
   }
+  width: 25%;
+  height: 40px;
+  border: 1px solid var(--color-background);
 }
