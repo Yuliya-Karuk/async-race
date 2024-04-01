@@ -11,10 +11,15 @@ export class Router {
     window.onpopstate = (): void => {
       this.handleLocation();
     };
+    window.onload = (): void => {
+      this.handleLocation();
+    };
   }
 
   public handleLocation(): void {
+    console.log(window.location.pathname);
     this.currentPage = CheckRoute(window.location.pathname);
+    console.log(this.currentPage);
     this.setPage(this.currentPage);
   }
 
