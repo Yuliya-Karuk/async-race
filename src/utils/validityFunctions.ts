@@ -18,7 +18,7 @@ export function isFirstLetterLowerCase(input: HTMLInputElement): string {
 
 export function isContainForbiddenLetters(input: HTMLInputElement): string {
   let errorMessage = '';
-  if (!input.value.match('^[a-zA-Z\\-\\ ]+$')) {
+  if (!input.value.match('^[0-9a-zA-Z\\-\\ ]+$')) {
     errorMessage += `Only English letters, numbers, space and hyphen are allowed.`;
   }
   return errorMessage;

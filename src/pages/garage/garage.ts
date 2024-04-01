@@ -183,7 +183,9 @@ export class Garage {
   }
 
   private async resetCommonRace(): Promise<void> {
-    await this.stopAllCars();
+    const cars = await this.stopAllCars();
+    cars.forEach(car => car.view.setRaceButtons(false));
+
     this.view.toolbar.setStartButtonsState(Boolean(this.chosenCar));
   }
 

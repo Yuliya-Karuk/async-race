@@ -38,7 +38,7 @@ export class Toolbar extends BaseComponent {
     this.raceButton = createElementWithProperties('button', ['btn'], { type: 'button' }, [{ innerText: 'Race' }]);
     this.resetButton = createElementWithProperties('button', ['btn'], { type: 'button' }, [{ innerText: 'Reset' }]);
     this.createCarsButton = createElementWithProperties('button', ['btn'], { type: 'button' }, [
-      { innerText: 'Create Cars' },
+      { innerText: 'Create 100 Cars' },
     ]);
 
     const raceContainer = createElementWithProperties('div', [styles.raceContainer], undefined, undefined, [
