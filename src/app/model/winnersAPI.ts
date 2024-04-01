@@ -25,7 +25,7 @@ export class WinnersDatabase {
       this.winnersTotal = Number(response.headers.get('X-Total-Count'));
       return winners;
     } catch {
-      throw Error('No connection');
+      throw Error('Error');
     }
   }
 

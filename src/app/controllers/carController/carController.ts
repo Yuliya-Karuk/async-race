@@ -31,7 +31,7 @@ export class CarController {
   private async startRaceCar(): Promise<void> {
     this.view.setRaceButtons(true);
     await this.prepareEngine();
-    this.startAnimation();
+    this.startAnimation(false);
   }
 
   public async prepareEngine(): Promise<void> {
@@ -46,7 +46,7 @@ export class CarController {
     this.isEngineWork = true;
   }
 
-  public async startAnimation(): Promise<FirstFinisher | never> {
+  public async startAnimation(isCommonRace: boolean): Promise<FirstFinisher | never> {
     const animate = (): void => {
       this.view.moveCarImage(this.currentPoint);
 
@@ -62,7 +62,7 @@ export class CarController {
 
     this.isEngineWork = await CarsApi.driveCar(this.id);
 
-    if (this.isEngineWork === false) {
+    if (this.isEngineWork === false && isCommonRace) {
       this.view.setCarBroken();
       return Promise.reject();
     }

@@ -23,8 +23,8 @@ export class CarsDatabase {
       const cars: TCar[] = await response.json();
       this.carsTotal = Number(response.headers.get('X-Total-Count'));
       return cars;
-    } catch {
-      throw Error('No connection');
+    } catch (error) {
+      throw Error('Error');
     }
   }
 
@@ -35,8 +35,8 @@ export class CarsDatabase {
       const response = await fetch(url);
       const car: TCar = await response.json();
       return car;
-    } catch {
-      throw Error('Error');
+    } catch (error) {
+      throw Error('NOT FOUND');
     }
   }
 
@@ -74,7 +74,7 @@ export class CarsDatabase {
       const updatedCar: TCar = await response.json();
       return updatedCar;
     } catch (error) {
-      throw Error('Error');
+      throw Error('NOT FOUND');
     }
   }
 
@@ -86,7 +86,7 @@ export class CarsDatabase {
       });
       return response;
     } catch (error) {
-      throw Error('Error');
+      throw Error('NOT FOUND');
     }
   }
 
@@ -104,7 +104,7 @@ export class CarsDatabase {
       const engineParams: TEngine = await response.json();
       return engineParams;
     } catch (error) {
-      throw Error('Error');
+      throw Error('NOT FOUND');
     }
   }
 
@@ -133,11 +133,15 @@ export class CarsDatabase {
     };
     const url = buildURL([this.baseUrl, this.engineEndpoint], queryParams);
 
-    const response = await fetch(url, {
-      method: 'PATCH',
-    });
+    try {
+      const response = await fetch(url, {
+        method: 'PATCH',
+      });
 
-    return response;
+      return response;
+    } catch (error) {
+      throw Error('NOT FOUND');
+    }
   }
 }
 

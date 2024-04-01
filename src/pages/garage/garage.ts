@@ -161,7 +161,7 @@ export class Garage {
 
     const startPromises = cars.map(car => {
       car.view.setRaceButtons(true);
-      return car.startAnimation();
+      return car.startAnimation(true);
     });
 
     const winnerData = await Promise.any(startPromises);
