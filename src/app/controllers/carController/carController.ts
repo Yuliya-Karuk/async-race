@@ -2,7 +2,7 @@ import { Car } from '../../../components/car/car';
 import { FirstFinisher } from '../../../types/interfaces';
 import { TCar } from '../../../types/types';
 import { findTrackLength } from '../../../utils/utils';
-import { CarsApi } from '../../model/carsDatabase';
+import { CarsApi } from '../../model/carsAPI';
 
 export class CarController {
   public view: Car;

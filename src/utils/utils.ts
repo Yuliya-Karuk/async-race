@@ -94,8 +94,8 @@ export function getRandomName(): string {
 }
 
 export function findTrackLength(): number {
-  const pageWidth = window.innerWidth > 1400 ? 1400 : window.innerWidth;
-  const trackLength = pageWidth - 2 * 20 - 2 * 10 - 80 - 40; // есть баг с полосой прокрутки
+  const pageWidth = document.documentElement.clientWidth > 1400 ? 1400 : document.documentElement.clientWidth;
+  const trackLength = pageWidth - 2 * 20 - 2 * 10 - 80 - 40;
   return trackLength;
 }
 

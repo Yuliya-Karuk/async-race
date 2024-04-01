@@ -147,7 +147,7 @@ export class Toolbar extends BaseComponent {
     this.pgnNext.removeAttribute('disabled');
     this.pgnPrevious.removeAttribute('disabled');
 
-    const pagesCount = Math.ceil(carsCount / 7);
+    const pagesCount = Math.ceil(carsCount / 7) === 0 ? 1 : Math.ceil(carsCount / 7);
 
     this.pgnText.innerText = `${currentPage} / ${pagesCount}`;
     this.total.innerText = `Total cars: ${carsCount}`;

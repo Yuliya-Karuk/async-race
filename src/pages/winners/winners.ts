@@ -1,4 +1,4 @@
-import { CarsApi } from '../../app/model/carsDatabase';
+import { CarsApi } from '../../app/model/carsAPI';
 import { WinnersApi } from '../../app/model/winnersAPI';
 import { Winner } from '../../components/winner/winner';
 import { Order, SortBy } from '../../types/enums';

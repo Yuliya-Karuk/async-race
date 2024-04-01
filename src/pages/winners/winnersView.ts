@@ -94,7 +94,7 @@ export class WinnersView extends BaseComponent {
     this.pgnNext.removeAttribute('disabled');
     this.pgnPrevious.removeAttribute('disabled');
 
-    const pagesCount = Math.ceil(carsCount / 10);
+    const pagesCount = Math.ceil(carsCount / 10) === 0 ? 1 : Math.ceil(carsCount / 10);
 
     this.pgnText.innerText = `${currentPage} / ${pagesCount}`;
     this.total.innerText = `Winners total: ${carsCount}`;

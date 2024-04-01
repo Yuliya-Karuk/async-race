@@ -1,5 +1,5 @@
 import { CarController } from '../../app/controllers/carController/carController';
-import { CarsApi } from '../../app/model/carsDatabase';
+import { CarsApi } from '../../app/model/carsAPI';
 import { WinnersApi } from '../../app/model/winnersAPI';
 import { FirstFinisher } from '../../types/interfaces';
 import { TCar, TWinner } from '../../types/types';
@@ -125,6 +125,11 @@ export class Garage {
 
   private async handleDeleteCar(car: CarController): Promise<void> {
     await CarsApi.deleteCar(car.id);
+
+    if (car === this.chosenCar) {
+      this.view.toolbar.resetUpdateInputs();
+      this.chosenCar = null;
+    }
 
     const carInWinners = await this.checkCarIsWinner(car.id);
     if (carInWinners) {
