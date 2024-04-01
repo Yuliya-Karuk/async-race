@@ -7,7 +7,6 @@ export class MainController {
   public main: Main;
   private page: Garage | Winners;
   private pages: { garage?: Garage; winners?: Winners };
-  // private viewName: RaceViews;
 
   constructor() {
     this.pages = {};
