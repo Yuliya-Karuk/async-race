@@ -29,6 +29,15 @@
   &_head {
     font-size: 2.8rem;
     color: var(--color-primary-bright);
+
+    @include media-laptop {
+      font-size: 1.6rem;
+      line-height: 1.5;
+    }
+
+    @include media-tablet {
+      font-size: 1.2rem;
+    }
   }
 }
 
