@@ -3,7 +3,7 @@ import { CarsApi } from '../../app/model/carsAPI';
 import { WinnersApi } from '../../app/model/winnersAPI';
 import { FirstFinisher } from '../../types/interfaces';
 import { TCar, TWinner } from '../../types/types';
-import { getRandomColor, getRandomName, isNotNullable } from '../../utils/utils';
+import { getAnimationSpeed, getRandomColor, getRandomName, isNotNullable } from '../../utils/utils';
 import { validationFunctions } from '../../utils/validityFunctions';
 import { GarageView } from './garageView';
 
@@ -11,6 +11,7 @@ export class Garage {
   public view: GarageView;
   private chosenCar: CarController | null;
   private pageNumber: number;
+  private requestAnimationSpeed: number;
 
   constructor() {
     this.view = new GarageView();
@@ -28,6 +29,7 @@ export class Garage {
 
   public async loadPage(): Promise<void> {
     const carsPage = await CarsApi.getCars(this.pageNumber);
+    this.requestAnimationSpeed = await getAnimationSpeed();
 
     this.renderCars(carsPage);
 
@@ -39,7 +41,7 @@ export class Garage {
     this.view.cleanCarsContainer();
 
     const cars = carsData.map(oneCar => {
-      const car = new CarController(oneCar);
+      const car = new CarController(oneCar, this.requestAnimationSpeed);
 
       if (this.chosenCar && this.chosenCar.id === car.id) {
         this.chosenCar = car;

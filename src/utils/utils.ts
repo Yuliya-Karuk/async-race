@@ -119,3 +119,16 @@ export function switchSort(currentSort: SortBy): SortBy {
       return SortBy.time;
   }
 }
+
+export function getAnimationSpeed(): Promise<number> {
+  return new Promise(resolve => {
+    function calculateSpeed(): void {
+      requestAnimationFrame(t1 => {
+        requestAnimationFrame(t2 => {
+          resolve(1000 / (t2 - t1));
+        });
+      });
+    }
+    calculateSpeed();
+  });
+}

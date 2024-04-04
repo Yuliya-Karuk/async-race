@@ -10,12 +10,13 @@ export class CarController {
   public name: string;
   public color: string;
 
-  private raceLength: number;
-  private carSpeed: number;
+  private animationSpeed: number;
+  private animationTimeInS: number;
   private currentPoint: number = 0;
   private isEngineWork: boolean;
 
-  constructor(car: TCar) {
+  constructor(car: TCar, animationSpeed: number) {
+    this.animationSpeed = animationSpeed;
     this.id = car.id;
     this.color = car.color;
     this.name = car.name;
@@ -36,11 +37,7 @@ export class CarController {
 
   public async prepareEngine(): Promise<void> {
     const { velocity, distance } = await CarsApi.startCarEngine(this.id);
-    const AnimationTimeInS = distance / velocity / 1000;
-
-    this.raceLength = findTrackLength();
-
-    this.carSpeed = this.raceLength / AnimationTimeInS / 60;
+    this.animationTimeInS = distance / velocity / 1000;
 
     this.currentPoint = 0;
     this.isEngineWork = true;
@@ -48,11 +45,14 @@ export class CarController {
 
   public async startAnimation(isCommonRace: boolean): Promise<FirstFinisher | never> {
     const animate = (): void => {
+      const raceLength = findTrackLength();
+      const carSpeed = raceLength / this.animationTimeInS / this.animationSpeed;
+
       this.view.moveCarImage(this.currentPoint);
 
-      this.currentPoint += this.carSpeed;
+      this.currentPoint += carSpeed;
 
-      if (this.currentPoint < this.raceLength && this.isEngineWork) {
+      if (this.currentPoint < raceLength && this.isEngineWork) {
         requestAnimationFrame(animate);
       }
     };
