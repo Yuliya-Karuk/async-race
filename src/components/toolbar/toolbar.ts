@@ -130,7 +130,7 @@ export class Toolbar extends BaseComponent {
   public setFinishButtonsState(): void {
     this.node.classList.remove('toolbar_disabled');
     this.resetButton.removeAttribute('disabled');
-    this.raceButton.removeAttribute('disabled');
+    this.raceButton.setAttribute('disabled', 'disabled');
   }
 
   public resetCreateInputs(): void {

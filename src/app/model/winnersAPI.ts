@@ -8,7 +8,7 @@ export class WinnersDatabase {
   private baseUrl: string = BaseUrl;
   public winnersTotal: number;
 
-  public async getWinners(pageNumber: number, sortBy: string = 'time', order: string = 'ASC'): Promise<TWinner[]> {
+  public async getWinners(pageNumber: number, sortBy: string, order: string): Promise<TWinner[]> {
     const queryParams = {
       _page: pageNumber.toString(),
       _limit: this.winnersPerPage,
