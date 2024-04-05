@@ -213,8 +213,8 @@ export class Garage {
     const isAlreadyWinner = await this.checkCarIsWinner(winnerCar.id);
     if (isAlreadyWinner) {
       const newWinnerData = {
-        time: raceTime < isAlreadyWinner.time ? raceTime : isAlreadyWinner.time,
         wins: isAlreadyWinner.wins + 1,
+        time: raceTime < isAlreadyWinner.time ? raceTime : isAlreadyWinner.time,
       };
 
       await WinnersApi.updateWinner(isAlreadyWinner.id, newWinnerData);

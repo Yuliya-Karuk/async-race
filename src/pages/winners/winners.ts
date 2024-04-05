@@ -48,12 +48,21 @@ export class Winners {
   private async renderWinners(winners: TWinner[]): Promise<void> {
     this.view.cleanWinnersContainer();
 
-    winners.forEach(async (winnerData, i) => {
-      const index = (this.pageNumber - 1) * 10 + i + 1;
-      const carData = await CarsApi.getCar(winnerData.id);
-      const winner = new Winner(winnerData, carData, index);
-      this.view.winnersBlock.append(winner.getNode());
+    const winnersPromises = winners.map(async (winnerData, i) => {
+      const winner = await this.renderOneWinner(winnerData, i);
+      return winner;
     });
+
+    const winnersCreated = await Promise.all(winnersPromises);
+
+    winnersCreated.forEach(winner => this.view.winnersBlock.append(winner.getNode()));
+  }
+
+  private async renderOneWinner(winnerData: TWinner, tableNumber: number): Promise<Winner> {
+    const index = (this.pageNumber - 1) * 10 + tableNumber + 1;
+    const carData = await CarsApi.getCar(winnerData.id);
+    const winner = new Winner(winnerData, carData, index);
+    return winner;
   }
 
   private handlePagination(direction: number): void {
