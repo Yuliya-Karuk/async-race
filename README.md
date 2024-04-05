@@ -26,4 +26,4 @@ The application was created as part of the JavaScript/Frontend course from The R
 - enjoy 🚗
 
 ## 🌠 Deploy 
-### [RSS Puzzle](https://yuliya-karuk.github.io/rss-puzzle/)
+### [Async Race](https://yuliya-karuk.github.io/async-race/)
