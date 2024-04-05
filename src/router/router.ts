@@ -1,5 +1,5 @@
 import { Callback } from '../types/types';
-import { CheckRoute } from '../utils/utils';
+import { checkRoute } from '../utils/utils';
 import { Routes } from './router.types';
 
 export class Router {
@@ -18,7 +18,7 @@ export class Router {
 
   public handleLocation(): void {
     const route = window.location.hash;
-    this.currentPage = CheckRoute(route);
+    this.currentPage = checkRoute(route);
 
     this.setPage(this.currentPage);
   }

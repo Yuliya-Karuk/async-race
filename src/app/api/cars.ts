@@ -1,15 +1,16 @@
-import { TCar, TEngine } from '../../types/types';
+import { StatusCodes } from 'http-status-codes';
 import { buildURL } from '../../utils/buildUrl';
-import { BaseUrl } from '../../utils/constants';
+import { BASE_URL } from '../../utils/constants';
+import { Car, CarsResponse, CreateCar, UpdateCar } from '../models/car';
+import { Engine } from '../models/engine';
 
-export class CarsDatabase {
+export class CarsService {
   private garageEndpoint: string = 'garage';
   private engineEndpoint = 'engine';
   private carsPerPage: string = '7';
-  private baseUrl: string = BaseUrl;
-  public carsTotal: number;
+  private baseUrl: string = BASE_URL;
 
-  public async getCars(pageNumber: number): Promise<TCar[]> {
+  public async getCars(pageNumber: number): Promise<CarsResponse> {
     const queryParams = {
       _page: pageNumber.toString(),
       _limit: this.carsPerPage,
@@ -20,27 +21,29 @@ export class CarsDatabase {
       const response = await fetch(url, {
         method: 'GET',
       });
-      const cars: TCar[] = await response.json();
-      this.carsTotal = Number(response.headers.get('X-Total-Count'));
-      return cars;
+
+      const cars: Car[] = await response.json();
+      const carsTotal = Number(response.headers.get('X-Total-Count'));
+
+      return { data: cars, totalCount: carsTotal };
     } catch (error) {
       throw Error('Error');
     }
   }
 
-  public async getCar(carId: number): Promise<TCar> {
+  public async getCar(carId: number): Promise<Car> {
     const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
 
     try {
       const response = await fetch(url);
-      const car: TCar = await response.json();
+      const car: Car = await response.json();
       return car;
     } catch (error) {
       throw Error('NOT FOUND');
     }
   }
 
-  public async createCar(carData: Omit<TCar, 'id'>): Promise<TCar> {
+  public async createCar(carData: CreateCar): Promise<Car> {
     const url = buildURL([this.baseUrl, this.garageEndpoint]);
 
     try {
@@ -52,14 +55,14 @@ export class CarsDatabase {
         body: JSON.stringify(carData),
       });
 
-      const createdCar: TCar = await response.json();
+      const createdCar: Car = await response.json();
       return createdCar;
     } catch {
       throw Error('Error');
     }
   }
 
-  public async updateCar(carId: number, carNewData: Omit<TCar, 'id'>): Promise<TCar> {
+  public async updateCar(carId: number, carData: UpdateCar): Promise<Car> {
     const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
 
     try {
@@ -68,29 +71,28 @@ export class CarsDatabase {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(carNewData),
+        body: JSON.stringify(carData),
       });
 
-      const updatedCar: TCar = await response.json();
+      const updatedCar: Car = await response.json();
       return updatedCar;
     } catch (error) {
       throw Error('NOT FOUND');
     }
   }
 
-  public async deleteCar(carId: number): Promise<Response> {
+  public async deleteCar(carId: number): Promise<void> {
     const url = buildURL([this.baseUrl, this.garageEndpoint, String(carId)]);
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
         method: 'DELETE',
       });
-      return response;
     } catch (error) {
       throw Error('NOT FOUND');
     }
   }
 
-  public async startCarEngine(carId: number): Promise<TEngine> {
+  public async startCarEngine(carId: number): Promise<Engine> {
     const queryParams = {
       id: carId.toString(),
       status: 'started',
@@ -101,7 +103,7 @@ export class CarsDatabase {
       const response = await fetch(url, {
         method: 'PATCH',
       });
-      const engineParams: TEngine = await response.json();
+      const engineParams: Engine = await response.json();
       return engineParams;
     } catch (error) {
       throw Error('NOT FOUND');
@@ -119,14 +121,14 @@ export class CarsDatabase {
       method: 'PATCH',
     });
 
-    if (response.status === 500) {
+    if (response.status === StatusCodes.INTERNAL_SERVER_ERROR) {
       return false;
     }
 
     return true;
   }
 
-  public async stopCar(carId: number): Promise<Response> {
+  public async stopCar(carId: number): Promise<void> {
     const queryParams = {
       id: carId.toString(),
       status: 'stopped',
@@ -134,15 +136,13 @@ export class CarsDatabase {
     const url = buildURL([this.baseUrl, this.engineEndpoint], queryParams);
 
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
         method: 'PATCH',
       });
-
-      return response;
     } catch (error) {
       throw Error('NOT FOUND');
     }
   }
 }
 
-export const CarsApi = new CarsDatabase();
+export const CarsApi = new CarsService();

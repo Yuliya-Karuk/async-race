@@ -1,10 +1,11 @@
-import { TCar, TWinner } from '../../types/types';
+import { Car } from '../../app/models/car';
+import { Winner } from '../../app/models/winner';
 import { createElementWithProperties } from '../../utils/utils';
 import { BaseComponent } from '../baseComponent';
 import { SVGComponent } from '../svgComponent/svgComponent';
 import styles from './winner.module.scss';
 
-export class Winner extends BaseComponent {
+export class WinnerView extends BaseComponent {
   private name: string;
   private color: string;
   private time: number;
@@ -12,7 +13,7 @@ export class Winner extends BaseComponent {
   private id: number;
   private wins: number;
 
-  constructor(winner: TWinner, car: TCar, index: number) {
+  constructor(winner: Winner, car: Car, index: number) {
     super('div', ['winners-row']);
     this.name = car.name;
     this.color = car.color;

@@ -7,7 +7,7 @@ export class Main extends BaseComponent {
   }
 
   public setContent(component: HTMLElement): void {
-    if (this.node.children.length === 0) {
+    if (!this.node.children.length) {
       this.appendChildren([component]);
     } else {
       this.node.replaceChildren(component);

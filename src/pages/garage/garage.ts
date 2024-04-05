@@ -1,8 +1,9 @@
+import { CarsApi } from '../../app/api/cars';
+import { WinnersApi } from '../../app/api/winners';
 import { CarController } from '../../app/controllers/carController/carController';
-import { CarsApi } from '../../app/model/carsAPI';
-import { WinnersApi } from '../../app/model/winnersAPI';
+import { Car } from '../../app/models/car';
+import { Winner } from '../../app/models/winner';
 import { FirstFinisher } from '../../types/interfaces';
-import { TCar, TWinner } from '../../types/types';
 import { getAnimationSpeed, getRandomColor, getRandomName, isNotNullable } from '../../utils/utils';
 import { validationFunctions } from '../../utils/validityFunctions';
 import { GarageView } from './garageView';
@@ -12,6 +13,7 @@ export class Garage {
   private chosenCar: CarController | null;
   private pageNumber: number;
   private requestAnimationSpeed: number;
+  private defaultGeneratorNumber: number = 100;
 
   constructor() {
     this.view = new GarageView();
@@ -28,16 +30,16 @@ export class Garage {
   }
 
   public async loadPage(): Promise<void> {
-    const carsPage = await CarsApi.getCars(this.pageNumber);
+    const { data, totalCount } = await CarsApi.getCars(this.pageNumber);
     this.requestAnimationSpeed = await getAnimationSpeed();
 
-    this.renderCars(carsPage);
+    this.renderCars(data);
 
-    this.view.toolbar.setPagination(this.pageNumber, CarsApi.carsTotal);
+    this.view.toolbar.setPagination(this.pageNumber, totalCount);
     this.view.toolbar.setStartButtonsState(Boolean(this.chosenCar));
   }
 
-  public renderCars(carsData: TCar[]): Promise<CarController[]> {
+  public renderCars(carsData: Car[]): Promise<CarController[]> {
     this.view.cleanCarsContainer();
 
     const cars = carsData.map(oneCar => {
@@ -64,7 +66,7 @@ export class Garage {
       this.handleUpdateCar(this.view.toolbar.updateInputName)
     );
 
-    this.view.toolbar.createCarsButton.addEventListener('click', () => this.create100Cars());
+    this.view.toolbar.createCarsButton.addEventListener('click', () => this.createCars());
 
     this.view.toolbar.pgnNext.addEventListener('click', () => this.handlePagination(1));
     this.view.toolbar.pgnPrevious.addEventListener('click', () => this.handlePagination(-1));
@@ -141,8 +143,8 @@ export class Garage {
     this.loadPage();
   }
 
-  private async create100Cars(): Promise<void> {
-    const carsArray = Array.from({ length: 100 }, () => ({
+  private async createCars(): Promise<void> {
+    const carsArray = Array.from({ length: this.defaultGeneratorNumber }, () => ({
       color: getRandomColor(),
       name: getRandomName(),
     }));
@@ -173,9 +175,9 @@ export class Garage {
   private async stopAllCars(): Promise<CarController[]> {
     this.view.toolbar.disableAllButtons();
 
-    const carsData = await CarsApi.getCars(this.pageNumber);
+    const { data } = await CarsApi.getCars(this.pageNumber);
 
-    const cars = await this.renderCars(carsData);
+    const cars = await this.renderCars(data);
     cars.forEach(car => car.view.disableRaceButton());
 
     const stopPromises = cars.map(car => car.stopRaceCar(true));
@@ -209,7 +211,7 @@ export class Garage {
     }
   }
 
-  private async sendWinnerToServer(winnerCar: TCar, raceTime: number): Promise<void> {
+  private async sendWinnerToServer(winnerCar: Car, raceTime: number): Promise<void> {
     const isAlreadyWinner = await this.checkCarIsWinner(winnerCar.id);
     if (isAlreadyWinner) {
       const newWinnerData = {
@@ -227,7 +229,7 @@ export class Garage {
     }
   }
 
-  private async checkCarIsWinner(id: number): Promise<TWinner | null> {
+  private async checkCarIsWinner(id: number): Promise<Winner | null> {
     const carInWinners = await WinnersApi.getWinner(id);
     return carInWinners;
   }

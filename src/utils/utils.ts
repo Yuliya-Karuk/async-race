@@ -70,7 +70,7 @@ export function checkTouch(value: Touch | null): HTMLElement {
   throw new Error(`Not expected value`);
 }
 
-export function CheckRoute(route: string): Routes {
+export function checkRoute(route: string): Routes {
   if (Routes.Garage.includes(route)) {
     return Routes.Garage;
   }

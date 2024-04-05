@@ -1,7 +1,7 @@
 import { Header } from '../../../components/header/header';
 import { Router } from '../../../router/router';
 import { Routes } from '../../../router/router.types';
-import { CheckRoute, checkEventTarget } from '../../../utils/utils';
+import { checkEventTarget, checkRoute } from '../../../utils/utils';
 
 export class HeaderController {
   public view: Header;
@@ -26,7 +26,7 @@ export class HeaderController {
     const location = checkEventTarget(e.target).getAttribute('href') || '';
     this.router.navigateTo(location);
 
-    this.page = CheckRoute(location);
+    this.page = checkRoute(location);
     this.setLinks(this.page);
   }
 

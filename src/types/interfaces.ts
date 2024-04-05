@@ -22,3 +22,11 @@ export interface FirstFinisher {
   id: number;
   startTime: number;
 }
+
+export interface Dataset<T> {
+  data: T[];
+}
+
+export interface PaginatedDataset<T> extends Dataset<T> {
+  totalCount: number;
+}

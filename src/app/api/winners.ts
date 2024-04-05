@@ -1,14 +1,14 @@
-import { TWinner } from '../../types/types';
+import { StatusCodes } from 'http-status-codes';
 import { buildURL } from '../../utils/buildUrl';
-import { BaseUrl } from '../../utils/constants';
+import { BASE_URL } from '../../utils/constants';
+import { UpdateWinner, Winner, WinnersResponse } from '../models/winner';
 
-export class WinnersDatabase {
+export class WinnersService {
   private winnersEndpoint: string = 'winners';
   private winnersPerPage: string = '10';
-  private baseUrl: string = BaseUrl;
-  public winnersTotal: number;
+  private baseUrl: string = BASE_URL;
 
-  public async getWinners(pageNumber: number, sortBy: string, order: string): Promise<TWinner[]> {
+  public async getWinners(pageNumber: number, sortBy: string, order: string): Promise<WinnersResponse> {
     const queryParams = {
       _page: pageNumber.toString(),
       _limit: this.winnersPerPage,
@@ -22,25 +22,26 @@ export class WinnersDatabase {
         method: 'GET',
       });
       const winners = await response.json();
-      this.winnersTotal = Number(response.headers.get('X-Total-Count'));
-      return winners;
+      const winnersTotal = Number(response.headers.get('X-Total-Count'));
+
+      return { data: winners, totalCount: winnersTotal };
     } catch {
       throw Error('Error');
     }
   }
 
-  public async getWinner(carId: number): Promise<TWinner | null> {
+  public async getWinner(carId: number): Promise<Winner | null> {
     const url = buildURL([this.baseUrl, this.winnersEndpoint, String(carId)]);
 
     const response = await fetch(url);
-    if (response.status === 404) {
+    if (response.status === StatusCodes.NOT_FOUND) {
       return null;
     }
-    const winner: TWinner = await response.json();
+    const winner: Winner = await response.json();
     return winner;
   }
 
-  public async updateWinner(carId: number, winnerNewData: Omit<TWinner, 'id'>): Promise<TWinner> {
+  public async updateWinner(carId: number, winnerData: UpdateWinner): Promise<Winner> {
     const url = buildURL([this.baseUrl, this.winnersEndpoint, String(carId)]);
 
     const response = await fetch(url, {
@@ -48,14 +49,14 @@ export class WinnersDatabase {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(winnerNewData),
+      body: JSON.stringify(winnerData),
     });
 
-    const updatedWinner: TWinner = await response.json();
+    const updatedWinner: Winner = await response.json();
     return updatedWinner;
   }
 
-  public async createWinner(winnerData: TWinner): Promise<TWinner> {
+  public async createWinner(winnerData: Winner): Promise<Winner> {
     const url = buildURL([this.baseUrl, this.winnersEndpoint]);
 
     const response = await fetch(url, {
@@ -66,7 +67,7 @@ export class WinnersDatabase {
       body: JSON.stringify(winnerData),
     });
 
-    const createdCar: TWinner = await response.json();
+    const createdCar: Winner = await response.json();
     return createdCar;
   }
 
@@ -83,4 +84,4 @@ export class WinnersDatabase {
   }
 }
 
-export const WinnersApi = new WinnersDatabase();
+export const WinnersApi = new WinnersService();

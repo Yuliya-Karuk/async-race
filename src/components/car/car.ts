@@ -1,10 +1,10 @@
-import { TCar } from '../../types/types';
+import { Car } from '../../types/types';
 import { createElementWithProperties } from '../../utils/utils';
 import { BaseComponent } from '../baseComponent';
 import { SVGComponent } from '../svgComponent/svgComponent';
 import styles from './car.module.scss';
 
-export class Car extends BaseComponent {
+export class CarView extends BaseComponent {
   private name: string;
   private color: string;
   private id: number;
@@ -18,7 +18,7 @@ export class Car extends BaseComponent {
   public carImage: HTMLDivElement;
   public carSvg: SVGComponent;
 
-  constructor(car: TCar) {
+  constructor(car: Car) {
     super('div', [styles.car]);
     this.name = car.name;
     this.color = car.color;

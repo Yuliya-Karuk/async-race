@@ -1,3 +1,4 @@
+import { SVG_COUNT } from '../../utils/constants';
 import { checkDOMElement } from '../../utils/utils';
 import styles from './svgComponent.module.scss';
 
@@ -8,7 +9,7 @@ export class SVGComponent {
   private svg: SVGElement;
 
   constructor(color: string, carId: number) {
-    const carModel = carId % 7;
+    const carModel = carId % SVG_COUNT;
 
     this.svg = checkDOMElement(SVGElement, document.createElementNS(this.svgNamespace, 'svg'));
     const use = checkDOMElement(SVGUseElement, document.createElementNS(this.svgNamespace, 'use'));

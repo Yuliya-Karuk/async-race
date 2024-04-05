@@ -1,11 +1,11 @@
-import { Car } from '../../../components/car/car';
+import { CarView } from '../../../components/car/car';
 import { FirstFinisher } from '../../../types/interfaces';
-import { TCar } from '../../../types/types';
 import { findTrackLength } from '../../../utils/utils';
-import { CarsApi } from '../../model/carsAPI';
+import { CarsApi } from '../../api/cars';
+import { Car } from '../../models/car';
 
 export class CarController {
-  public view: Car;
+  public view: CarView;
   public id: number;
   public name: string;
   public color: string;
@@ -15,12 +15,12 @@ export class CarController {
   private currentPoint: number = 0;
   private isEngineWork: boolean;
 
-  constructor(car: TCar, animationSpeed: number) {
+  constructor(car: Car, animationSpeed: number) {
     this.animationSpeed = animationSpeed;
     this.id = car.id;
     this.color = car.color;
     this.name = car.name;
-    this.view = new Car(car);
+    this.view = new CarView(car);
     this.bindRaceListeners();
   }
 
@@ -62,7 +62,7 @@ export class CarController {
 
     this.isEngineWork = await CarsApi.driveCar(this.id);
 
-    if (this.isEngineWork === false && isCommonRace) {
+    if (!this.isEngineWork && isCommonRace) {
       this.view.setCarBroken();
       return Promise.reject();
     }

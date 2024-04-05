@@ -1,8 +1,8 @@
-import { CarsApi } from '../../app/model/carsAPI';
-import { WinnersApi } from '../../app/model/winnersAPI';
-import { Winner } from '../../components/winner/winner';
+import { CarsApi } from '../../app/api/cars';
+import { WinnersApi } from '../../app/api/winners';
+import { Winner } from '../../app/models/winner';
+import { WinnerView } from '../../components/winner/winner';
 import { Order, SortBy } from '../../types/enums';
-import { TWinner } from '../../types/types';
 import { switchOrder, switchSort } from '../../utils/utils';
 import { WinnersView } from './winnersView';
 
@@ -38,14 +38,14 @@ export class Winners {
   }
 
   public async loadPage(): Promise<void> {
-    const winners = await WinnersApi.getWinners(this.pageNumber, this.sortBy, this.order);
+    const { data, totalCount } = await WinnersApi.getWinners(this.pageNumber, this.sortBy, this.order);
 
-    this.view.setPagination(this.pageNumber, WinnersApi.winnersTotal);
+    this.view.setPagination(this.pageNumber, totalCount);
 
-    this.renderWinners(winners);
+    this.renderWinners(data);
   }
 
-  private async renderWinners(winners: TWinner[]): Promise<void> {
+  private async renderWinners(winners: Winner[]): Promise<void> {
     this.view.cleanWinnersContainer();
 
     const winnersPromises = winners.map(async (winnerData, i) => {
@@ -58,10 +58,10 @@ export class Winners {
     winnersCreated.forEach(winner => this.view.winnersBlock.append(winner.getNode()));
   }
 
-  private async renderOneWinner(winnerData: TWinner, tableNumber: number): Promise<Winner> {
+  private async renderOneWinner(winnerData: Winner, tableNumber: number): Promise<WinnerView> {
     const index = (this.pageNumber - 1) * 10 + tableNumber + 1;
     const carData = await CarsApi.getCar(winnerData.id);
-    const winner = new Winner(winnerData, carData, index);
+    const winner = new WinnerView(winnerData, carData, index);
     return winner;
   }
 

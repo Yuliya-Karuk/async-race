@@ -1,5 +1,5 @@
 import { Router } from '../../router/router';
-import { CheckRoute } from '../../utils/utils';
+import { checkRoute } from '../../utils/utils';
 import { FooterController } from './footerController/footerController';
 import { HeaderController } from './headerController/headerController';
 import { MainController } from './mainController/mainController';
@@ -30,7 +30,7 @@ export class AppController {
   }
 
   public async setPage(location: string): Promise<void> {
-    this.mainController.setView(CheckRoute(location));
-    this.headerController.setLinks(CheckRoute(location));
+    this.mainController.setView(checkRoute(location));
+    this.headerController.setLinks(checkRoute(location));
   }
 }

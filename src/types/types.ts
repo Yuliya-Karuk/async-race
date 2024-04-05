@@ -8,20 +8,3 @@ export type QueryParams = {
   _sort?: string;
   _order?: string;
 };
-
-export type TCar = {
-  id: number;
-  name: string;
-  color: string;
-};
-
-export type TEngine = {
-  velocity: number;
-  distance: number;
-};
-
-export type TWinner = {
-  id: number;
-  wins: number;
-  time: number;
-};
