@@ -1,4 +1,4 @@
-import { Car } from '../../types/types';
+import { Car } from '../../app/models/car';
 import { createElementWithProperties } from '../../utils/utils';
 import { BaseComponent } from '../baseComponent';
 import { SVGComponent } from '../svgComponent/svgComponent';
